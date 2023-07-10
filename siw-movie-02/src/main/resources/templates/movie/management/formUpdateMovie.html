@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Update Movie</title>
+        <link rel="stylesheet" href="/css/management/entity.css" />
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <h4 class="goBack"><a href="/indexMovie">Indice Film</a></h4>
+	    
+	    <div class="data" th:if="${movie}">
+		
+            <a th:href="@{'/movies/' + ${movie.id}}"><h1 th:text="${movie.title}">Titolo Film</h1></a>
+            <h2 th:text="'Anno di uscita: ' + ${movie.year}">Anno di uscita: XXXX</h2>
+            <form th:action="@{'/changeMovieData/' + ${movie.id}}" method="GET">
+                <div>
+                   <span><button class="update" type="submit">Modifica Dati</button></span>
+                </div>
+            </form>
+        
+            
+            <h2>Immagine di copertina:</h2>
+			<img class="cover" th:src="@{${movie.coverPath}}">
+			<div class="spaceMaker"></div>
+            <div th:unless="${#lists.isEmpty(movie.images)}">
+				<h3>Immagini registrate:</h3>
+	            <ul>
+		    		<li th:each="imagePath : ${movie.imagePaths}">
+		    			<img class="image" th:src="@{${imagePath}}">
+		    		</li>
+		    	</ul>
+		    </div>
+		    <form th:action="@{'/manageMovieImages/' + ${movie.id}}" method="GET">
+                <div>
+                   <span><button class="update" type="submit">Gestisci Immagini</button></span>
+                </div>
+            </form>
+        
+        
+            <div th:if="${movie.director==null}">
+                <h2>Regista corrente:Nessuno</h2>
+                <h2>Nessuno</h2>
+            </div>
+            <div th:unless="${movie.director==null}">
+                <h2>Regista corrente:</h2>
+                <h3 class="h3fix" th:unless="${movie.director.death}">
+                    <a th:href="@{'/artists/' + ${movie.director.id}}"
+                       th:text="${movie.director.name} + ' ' + ${movie.director.surname} + ' (' + ${movie.director.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                </h3>
+                <h3 class="h3fix" th:if="${movie.director.death}">
+                    <a th:href="@{'/artists/' + ${movie.director.id}}"
+                       th:text="${movie.director.name} + ' ' + ${movie.director.surname} + ' (' + ${movie.director.birth} + '-' + ${movie.director.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                </h3>
+                <img class="image" th:src="@{${movie.director.imagePath}}">
+            </div>
+            <form th:action="@{'/updateDirectorOfMovie/' + ${movie.id}}" method="GET">
+                <div>
+                   <span><button class="update" type="submit">Modifica Regista</button></span>
+                </div>
+            </form>
+        
+        
+            <h2>Attori correnti:</h2>
+            <div th:if="${movie.actors.isEmpty()}">Nessuno</div>
+            <div>
+                <ul>
+                    <li th:each="artist : ${movie.actors}">
+                        <h3 th:unless="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                        </h3>
+                        <h3 th:if="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-' + ${artist.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                        </h3>
+                        <img class="image" th:src="@{${artist.imagePath}}">
+                    </li>
+                </ul>
+            </div>
+            <form th:action="@{'/updateActorsOnMovie/' + ${movie.id}}" method="GET">
+                <div>
+                    <span><button class="update" type="submit">Modifica Attori</button></span>
+                </div>
+            </form>
+        
+        </div>
+        <div class="na" th:unless="${movie}">Non esiste</div>
+        
+    </body>
+</html>

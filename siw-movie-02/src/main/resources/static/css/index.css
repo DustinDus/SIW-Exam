@@ -1,0 +1,98 @@
+header {
+	display: flex;
+	color: white;
+	background-color: rgb(98, 192, 144);
+	height: 1.5em;
+    text-align: start;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+    padding: 0.2em;
+}
+
+header div {
+	margin: 0.4em;
+}
+
+body {
+	font-family: Lucida Console, Verdana, Avanta Garde;
+    margin: 0px;
+	overflow: hidden;
+}
+
+header span a {
+	text-decoration: none; 
+    color: white;
+    font-size: 1.2em;
+}
+header a { 
+	text-decoration: none; 
+    color: white;
+    font-size: 0.6em;
+}
+a { 
+	text-decoration: none; 
+    color: darkgrey;
+}
+a:hover { 
+	text-decoration: underline; 
+}
+
+.homepage {
+	transform: translateY(-44%);
+}
+.homepage:hover {
+	transform: translateY(0%);
+	transition: 0.5s;
+	transition-timing-function: ease-out;
+}
+.homepage:not(:hover) {
+	transform: translateY(-44%);
+	transition: 0.5s;
+	transition-timing-function: ease-out;
+}
+
+
+.options {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1em;
+	color: rgb(0, 154, 122);
+	margin: 2em;
+}
+
+.odissea {
+	background-image: url("/images/odissea3.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+}
+
+.t-rex {
+	background-image: url("/images/t-rex2.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 0% 0%;
+	background-size: 90%;
+}
+
+.mime {
+	background-image: url("/images/mime3.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 100% -20%;
+	background-size: 40%;
+}
+
+.newspaper {
+	background-image: url("/images/newspaper.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50% -10%;
+	background-size: 100%;
+}
+
+.spaceMaker {
+	margin: 6em;
+}

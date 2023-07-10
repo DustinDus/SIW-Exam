@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Home</title>
+        <link rel="stylesheet" href="/css/index.css" />
+    </head>
+    
+    <body class="odissea">
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<div class="options">
+		    <img src="/images/logo-siw.png">
+		
+		    <h2>Cosa hai intenzione di fare?</h2>
+		    <a href="indexNews"><h1>Controlla le ultime Notizie</h1></a>
+		    <a href="indexMovie"><h1>Cerca Informazioni Film</h1></a>
+		    <a href="indexArtist"><h1>Cerca Informazioni Artisti</h1></a>
+		</div>
+		
+	</body>
+	
+</html>

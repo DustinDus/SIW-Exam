@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Nuovo Artista</title>
+		<link rel="stylesheet" href="/css/form.css" />
+		<script src="/js/updatePreview.js"></script>
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<h1>Dettagli Artista</h1>
+		<form th:action="@{/newArtist}" method="POST" th:object="${artist}" enctype="multipart/form-data">
+			<div>
+			    <h3 th:if="${#fields.hasGlobalErrors()}">
+			    	<span class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}" th:style="'color:red'">Errore!</span>
+			    </h3>
+			
+			    <h3>
+			   	    <span>Nome completo:</span>
+			   	    <span><input required type="text" th:field="${artist.name}"></span>
+			   	    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:style="'color:red'"></span>
+			   	</h3>
+			    <h3>
+			       	<span>Anno di nascita:</span>
+			       	<span><input required type="number" th:field="${artist.birth}"></span>
+			       	<span class="error" th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" th:style="'color:red'"></span>
+			   	</h3>
+				<h3>
+				    <span>Anno di morte:</span>
+				    <span><input type="number" th:field="${artist.death}"></span>
+				    <span class="error" th:if="${#fields.hasErrors('death')}" th:errors="*{death}" th:style="'color:red'"></span>
+				</h3>
+				<h3>
+				    <span>Breve biografia dell'Artista:</span><br>
+				    <span><textarea type="text" th:field="${artist.shortBio}"></textarea></span>
+				    <span class="error" th:if="${#fields.hasErrors('shortBio')}" th:errors="*{shortBio}" th:style="'color:red'"></span>
+				</h3>
+			
+			    <div class="submit">
+				    <span><button type="submit">Invia</button></span>
+			    </div>
+			</div>
+			
+			<div>
+			    <label>
+                    Aggiungi immagine (.jpg o .png)
+                    <input type="file" name="fileImage" accept="image/png, image/jpeg" onchange="updatePreview(this, 'preview')" />
+                </label>
+                <div>
+                    <img id="preview" src="/images/placeholder2.png" alt="preview" />
+                </div>
+			</div>
+		</form>
+		
+	</body>
+	
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+	    <title>SiwMovie - Login</title>
+	    <link rel="stylesheet" href="/css/auth.css" />
+    </head>
+
+    <body>
+	    <header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+
+        <div class="bigBox">
+		
+		    <div class="logBox">
+	            <h1>Login</h1>
+	            <form th:action="@{/login}" method="POST">
+		    		<h3>
+						<span>Username:</span>
+		    	        <span><input name="username" type="text" required /></span>
+		   		    </h3>
+		    	    <h3>
+		    		    <span>Password:</span>
+		    		    <span><input name="password" type="password" required /></span>
+		    	    </h3>
+		    	    <div>
+		    		    <span th:if="${param.error != null}" th:style="'color:red'">Username o password errati</span>
+		    	    </div>
+		    	    <br>
+		    	    <div>
+		    		    <span><button type="submit">Login</button></span>
+		    	    </div>
+	            </form>
+	        </div>
+	    
+	        <div class="regBox">
+				<div>
+					Non hai un account?
+				</div>
+				<br>
+				<div>
+		            <a th:href="@{/register}">Clicca qui per registrarti</a>
+		        </div>
+	        </div>
+	    
+	    </div>
+	
+    </body>
+
+</html>

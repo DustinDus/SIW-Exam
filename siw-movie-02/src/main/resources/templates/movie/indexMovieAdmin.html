@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Home</title>
+        <link rel="stylesheet" href="/css/index.css" />
+    </head>
+    
+    <body class="t-rex">
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<div class="spaceMaker"></div>
+		
+		<div class="options">
+		    <h2>Operazioni su film possibili:</h2>
+        
+            <a href="/movies"><h1>Cerca film</h1></a>
+            <a href="/movieNews"><h1>Cerca Notizie su Film</h1></a>
+            
+            <a href="/formNewMovie" th:style="'color:slategrey'"><h1>Inserisci nuovo film</h1></a>
+            <a href="/manageMovies" th:style="'color:slategrey'"><h1>Gestisci film correnti</h1></a>
+		</div>
+		
+	</body>
+</html>

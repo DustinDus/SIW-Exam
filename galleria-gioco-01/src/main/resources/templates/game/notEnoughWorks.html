@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Niente da fare</title>
+		<link rel="stylesheet" href="/css/game/gameStart.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<p>Sembra che al momento il database non sia abbastanza grande per giocare...</p>
+	</body>
+	
+</html>

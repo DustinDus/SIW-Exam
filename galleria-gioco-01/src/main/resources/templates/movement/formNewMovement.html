@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Nuovo Movimento Artistico</title>
+		<link rel="stylesheet" href="/css/form.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<h1>Dettagli Movimento</h1>
+		<form th:action="@{/newMovement}" method="POST" th:object="${movement}">
+			<div>
+			    <h3 th:if="${#fields.hasGlobalErrors()}">
+		    		<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Errore!</p>
+		    	</h3>
+			
+		    	<h3>
+		    		<span>Nome movimento:</span>
+		    		<span><input required type="text" th:field="${movement.name}"></span>
+		    		<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:style="'color:red'"></span>
+		    	</h3>
+		    	<h3>
+		    		<span>Inizio:</span>
+		    		<span><input required type="number" th:field="${movement.startDate}"></span>
+		    		<span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" th:style="'color:red'"></span>
+			    </h3>
+			    <h3>
+			    	<span>Termine:</span>
+			    	<span><input type="number" th:field="${movement.endDate}"></span>
+			    	<span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" th:style="'color:red'"></span>
+		    	</h3>
+			    <h3>
+			    	<span>Descrizione:</span><br>
+			    	<span><textarea type="text" th:field="${movement.description}"></textarea></span>
+			    	<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:style="'color:red'"></span>
+			    </h3>
+			
+			    <div class="submit">
+			    	<span><button type="submit">Invia</button></span>
+			    </div>
+			</div>
+		</form>
+		
+	</body>
+	
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Gestisci Movimenti dell'Artista</title>
+		<link rel="stylesheet" href="/css/list.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<a class="back" th:href="@{/artists}">Torna all'indice</a>
+		
+		<h1>Movimenti Artistici di appartenenza dell'Artista 
+			<a th:href="@{'/artists/' + ${artist.id}}" th:text="${artist.name}">Nome Artista</a>
+		</h1>
+		
+		<!-- Movimenti dell'Artista -->
+		<div class="na" th:if="${#lists.isEmpty(artist.movements)}">L'Artista non appartiene ad alcun Movimento</div>
+		<ul>
+		    <li th:each="movement : ${artist.movements}">
+				<div class="top">
+			        <a th:href="@{'/movements/' + ${movement.id}}">
+				        <span th:text="${movement.name}">Nome Movimento</span>
+				        <span th:if="${movement.endDate}" th:text="${'(~' + movement.startDate} + ' - ~' + ${movement.endDate} + ')'">(~XXXX - ~YYYY)</span>
+			            <span th:unless="${movement.endDate}" th:text="'(~' + ${movement.startDate} + '- Contemporaneo)'">(~XXXX - Contamporaneo)</span>
+			        </a>
+			        <form class="sideButton" th:action="@{'/removeMovementFromArtist/' + ${movement.id} + '/' + ${artist.id}}" method="POST">
+					    <span><button type="submit">Rimuovi</button></span>
+				    </form>
+				</div>
+				
+				<div class="spaceMaker"></div>
+				
+			    <ul class="mainWorks">
+			        <li th:each="work : ${movement.mainWorks}">
+			            <img th:src="@{${work.imagePath}}">
+		            </li>
+		        </ul>
+		    </li>
+	    </ul>
+	    
+	    <!-- Altri Movimenti -->
+	    <h1>Altri Movimenti Artistici nel sistema</h1>
+	    <ul>
+		    <li th:each="movement : ${movements}" th:unless="${artist.movements.contains(movement)}">
+				<div class="top">
+			        <a th:href="@{'/movements/' + ${movement.id}}">
+				        <span th:text="${movement.name}">Nome Movimento</span>
+				        <span th:if="${movement.endDate}" th:text="${'(~' + movement.startDate} + ' - ~' + ${movement.endDate} + ')'">(~XXXX - ~YYYY)</span>
+			            <span th:unless="${movement.endDate}" th:text="'(~' + ${movement.startDate} + '- Contemporaneo)'">(~XXXX - Contamporaneo)</span>
+			        </a>
+			        <form class="sideButton" th:action="@{'/addMovementToArtist/' + ${movement.id} + '/' + ${artist.id}}" method="POST">
+					    <span><button type="submit">Aggiungi</button></span>
+				    </form>
+				</div>
+				
+				<div class="spaceMaker"></div>
+				
+			    <ul class="mainWorks">
+			        <li th:each="work : ${movement.mainWorks}">
+			            <img th:src="@{${work.imagePath}}">
+		            </li>
+		        </ul>
+		    </li>
+	    </ul>
+	    
+	</body>
+	
+</html>

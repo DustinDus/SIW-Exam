@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Film</title>
+        <link rel="stylesheet" href="/css/list.css" />
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <h4 class="goBack"><a href="/indexMovie">Indice Film</a></h4>
+		
+        <h1>Film</h1>
+        
+        <form th:action="@{'/searchMovies'}" method="POST">
+			<input type="text" name="input" placeholder="Cerca per Titolo">
+			<span><button type="submit">Cerca</button></span>
+		</form>
+        
+        <div class="na" th:if="${movies.isEmpty()}">Non ci sono film nel sistema</div>
+        <ul>
+            <li th:each="movie : ${movies}">
+				<h3>
+                    <a th:href="@{'/movies/' + ${movie.id}}"
+                       th:text="${movie.title} + ' (' + ${movie.year} + ')'">Titolo Film (XXXX)</a>
+                </h3>
+                <div>
+                    <img th:src="@{${movie.coverPath}}">
+                </div>
+            </li>
+        </ul>
+        
+    </body>
+    
+</html>

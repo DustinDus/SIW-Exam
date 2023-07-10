@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Fine della corsa</title>
+		<link rel="stylesheet" href="/css/game/gameEnd.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<!-- Punteggio Finale -->
+		<div class="text">
+		    <span class="t1">Fine partita.</span>
+		    
+		    <span th:unless="${newScore}">
+		        <br><span class="t2">Buona la prossima...</span>
+		        <div class="spacemaker"></div>
+		    </span>
+		    
+		    <span th:if="${newScore}">
+		        <br><span class="t2" th:text="'Punteggio finale: '">Punteggio finale: </span>
+		            <span class="t2" th:text="${newScore.points}" th:style="'color:red'">X</span>
+		        <br><span class="t3" th:if="${'${scores}.contains(${newScore})'}" 
+		                             th:text="'Congratulazioni! Il tuo punteggio &#232; in Top 10!'">Se il punteggio e' in Top 10</span>
+		    </span>
+		</div>
+		
+		<!-- Top 10 -->
+		<div class="options">
+		    <div class="board">
+		    <h1>Top 10</h1>
+		    <ol>
+		        <li th:each="score : ${scores}">
+			        <span th:text="${score.player}">Giocatore</span>
+			        <span th:text="${score.points}" th:style="'color:red'">X</span>
+		        </li>
+	        </ol>
+	        </div>
+		
+		    <div class="buttons">
+				<form th:action="@{'/gameMenu'}" method="GET">
+			        <span><button class="continue" type="submit">Torna al Menù</button></span>
+		        </form>
+			    <form th:action="@{'/start'}" method="POST">
+			        <span><button class="play" type="submit">Gioca ancora</button></span>
+		        </form>
+		        <form th:action="@{'/leaderboard'}" method="GET">
+			        <span><button class="leaderboard" type="submit">Leaderboard Completa</button></span>
+	            </form>
+		    </div>
+		</div>
+		
+	</body>
+	
+</html>

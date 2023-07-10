@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title th:text="${userDetails.username}">user</title>
+		<link rel="stylesheet" href="/css/user.css" />
+		<script src="/js/updatePreview.js"></script>
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<h1>Utente <span th:text="${username}">User</span></h1>
+		
+		<div class="box">
+		    <div class="info">
+				<div class="data">
+                    <div>Nome: <span th:text="${user.name}" th:style="'color:indianred'">Nome Utente</span></div>
+                    <div>Cognome: <span th:text="${user.surname}" th:style="'color:indianred'">Cognome Utente</span></div>
+                    <div>Email: <span th:text="${user.email}" th:style="'color:indianred'">Email Utente</span></div>
+                </div>
+                
+				<h3>
+				    <form th:action="@{'/setAvatar/' + ${username}}" method="POST" enctype="multipart/form-data">
+					    <label>
+                            Cambia Avatar (.jpg o .png)
+                            <input required type="file" name="fileImage" accept="image/png, image/jpeg" onchange="updatePreview(this, 'preview')" />
+                        </label>
+                        <div>
+                            <img id="preview" src="/images/placeholder2.png" alt="preview" />
+                        </div>
+                        <div>
+							<button type="submit">Invia</button>
+						</div>
+				    </form>
+				</h3>
+				
+		        <h3><a th:href="@{'/userGallery/' + ${username}}">Galleria Personale</a></h3>
+		        <h3><a th:href="@{'/userComments/' + ${username}}">Cronologia Commenti</a></h3>
+		    </div>
+		    
+		    <div class="avatar">
+				<span th:if="${user.avatarPath}">
+				    <img th:src="@{${user.avatarPath}}">
+				</span>
+				<span th:unless="${user.avatarPath}">
+				    <img src="/images/Oil-Fall.jpg">
+				</span>
+			</div>
+		</div>
+		
+	</body>
+	
+</html>

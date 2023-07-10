@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Update Movie</title>
+        <link rel="stylesheet" href="/css/management/entity.css" />
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <h4 class="goBack"><a href="/indexNews">Indice Notizie</a></h4>
+	    
+	    <div class="data" th:if="${news}">
+		
+            <a th:href="@{'/news/' + ${news.id}}"><h1 th:text="${news.headline}">Titolo notizia</h1></a>
+            <div class="lessSpace"></div><div class="lessSpace"></div><div class="lessSpace"></div><div class="lessSpace"></div>
+            
+            <div class="newsBox">
+                <p th:text="${news.text}">...</p>
+            </div>
+            <div class="lessSpace"></div><div class="lessSpace"></div><div class="lessSpace"></div><div class="lessSpace"></div>
+            
+            <form th:action="@{'/changeNewsData/' + ${news.id}}" method="GET">
+                <div>
+                   <span><button class="update" type="submit">Modifica Dati</button></span>
+                </div>
+            </form>
+        
+            
+            <h2>Immagine:</h2>
+            <div class="na" th:unless="${news.image}">Nessuna</div>
+            <div th:if="${news.image}"><img class="image" th:src="@{${news.imagePath}}"></div>
+		    <form th:action="@{'/changeNewsImage/' + ${news.id}}" method="GET">
+                <div>
+                   <span><button class="update" type="submit">Cambia Immagine</button></span>
+                </div>
+            </form>
+            
+            
+            <h2>Film Correlati:</h2>
+            <div th:if="${#lists.isEmpty(news.taggedMovies)}" class="na">Nessuno</div>
+            <div th:unless="${#lists.isEmpty(news.taggedMovies)}">
+                <ul>
+				    <li th:each="movie : ${news.taggedMovies}">
+						<h3>
+                            <a th:href="@{'/movies/' + ${movie.id}}"
+                               th:text="${movie.title} + ' (' + ${movie.year} + ')'">Titolo Film (XXXX)</a>
+                        </h3>
+                        <img class="image" th:src="@{${movie.coverPath}}">
+				    </li>
+			    </ul>
+            </div>
+            <form th:action="@{'/moviesToTag/' + ${news.id}}" method="GET">
+                <div>
+                   <span><button class="update" type="submit">Modifica Film Correlati</button></span>
+                </div>
+            </form>
+            
+            
+            <h2>Artisti Correlati:</h2>
+            <div th:if="${#lists.isEmpty(news.taggedArtists)}" class="na">Nessuno</div>
+            <div th:unless="${#lists.isEmpty(news.taggedArtists)}">
+                <ul>
+				    <li th:each="artist : ${news.taggedArtists}">
+						<h3 th:unless="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                        </h3>
+                        <h3 th:if="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-' + ${artist.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                        </h3>
+                        <img class="image" th:src="@{${artist.imagePath}}">
+				    </li>
+			    </ul>
+            </div>
+            <form th:action="@{'/artistsToTag/' + ${news.id}}" method="GET">
+                <div>
+                   <span><button class="update" type="submit">Modifica Artisti Correlati</button></span>
+                </div>
+            </form>
+        
+        </div>
+        <div class="na" th:unless="${news}">Non esiste</div>
+        
+    </body>
+    
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Update Artist</title>
+        <link rel="stylesheet" href="/css/management/entity.css" />
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <h4 class="goBack"><a href="/indexArtist">Indice Artisti</a></h4>
+		
+		<div class="data" th:if="${artist}">
+		
+            <a th:href="@{'/artists/' + ${artist.id}}"><h1 th:text="${artist.name} + ' ' + ${artist.surname}">Nome Cognome</h1></a>
+            <h2 th:text="'Anno di nascita: ' + ${artist.birth}">Anno di nascita: XXXX</h2>
+            <h2><span th:if="${artist.death}" th:text="'Anno di morte: ' + ${artist.death}">Anno di morte: YYYY</span></h2>
+            <form th:action="@{'/changeArtistData/' + ${artist.id}}" method="GET">
+                <div>
+                   <span><button class="update" type="submit">Modifica Dati</button></span>
+                </div>
+            </form>
+        
+        
+            <img class="cover" th:src="@{${artist.imagePath}}">
+		    <form th:action="@{'/changeArtistImage/' + ${artist.id}}" method="GET">
+                <div>
+                   <span><button class="update" type="submit">Cambia Immagine</button></span>
+                </div>
+            </form>
+		
+		</div>
+        <div class="na" th:unless="${artist}">Non esiste</div>
+        
+    </body>
+</html>

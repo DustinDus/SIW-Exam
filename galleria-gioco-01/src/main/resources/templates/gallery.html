@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Galleria</title>
+		<link rel="stylesheet" href="/css/gallery.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<!-- Lista di tutti i movimenti (ordinati per Data di Inizio) -->
+		<div class="na" th:if="${#lists.isEmpty(movements)}">Nessun Movimento Artistico registrato</div>
+		<div th:unless="${#lists.isEmpty(movements)}">
+		    <h1 class="title">Movimenti Artistici</h1>
+		    <ul class="mainList">
+		        <li th:each="movement : ${movements}">
+			        <h2>
+						<a class="movement" th:href="@{'/movements/' + ${movement.id}}">
+				            <span th:text="${movement.name}">Neoclassicismo</span>
+				            <span th:if="${movement.endDate}" th:text="${'(~' + movement.startDate} + ' - ~' + ${movement.endDate} + ')'">(~1700 - ~1800)</span>
+			                <span th:unless="${movement.endDate}" th:text="'(~' + ${movement.startDate} + '- Contemporaneo)'">(~1700 - Contamporaneo)</span>
+			            </a>
+			        </h2>
+			        
+			        <!-- Per ogni movimento ne sono mostrate le opere (ordinate per data di creazione) -->
+			        <div th:unless="${#lists.isEmpty(movement.works)}">
+			            <h3>Opere del Movimento</h3>
+	                    <ul class="sndList">
+		                    <li th:each="work : ${works}" th:if="${movement.works.contains(work)}">
+			                    <a class="work" th:href="@{'/works/' + ${work.id}}"
+			                       th:text="${work.name} + ' (' + ${work.date} + ')'">Il viandante sul mare di nebbia (1818)</a>
+			                    <div>
+			                        <br><img th:src="@{${work.imagePath}}"><!-- URL --></span>
+			                    </div>
+			                    
+			                    <!-- Con tanto di creatore -->
+			                    <div th:unless="${#lists.isEmpty(work.makers)}">
+			                    <h4>Opera di: </h4>
+	                            <ul class="minList">
+		                            <li th:each="artist : ${artists}" th:if="${work.makers.contains(artist)}">
+			                            <a th:href="@{'/artists/' + ${artist.id}}">
+				                            <span th:text="${artist.name} ">Leonardo Da Vinci </span>
+				                            <span th:if="${artist.death}" th:text="${'(' + artist.birth} + '-' + ${artist.death} + ')'">(1452-1519)</span>
+			                                <span th:unless="${artist.death}" th:text="'(' + ${artist.birth} + '-In vita)'">(1519-In vita)</span>
+			                            </a>
+		                            </li>
+	                            </ul>
+			                    </div>
+			                    
+		                    </li>
+	                    </ul>
+			        </div>
+			        
+		        </li>
+	        </ul>
+	    </div>
+	    
+	    <!-- Lista di opere che non appartengono ad alcuna corrente -->
+	    <div th:if="${areThereOutsiders}">
+			<h1 class="title">Opere che non rientrano in alcun Movimento</h1>
+	        <ul class="mainList">
+		        <li th:each="work : ${works}" th:if="${work.movement==null}">
+			    <a class="work" th:href="@{'/works/' + ${work.id}}"
+			       th:text="${work.name} + ' (' + ${work.date} + ')'">Il viandante sul mare di nebbia (1818)</a>
+			    <div>
+			        <br><img th:src="@{${work.imagePath}}"><!-- URL --></span>
+			    </div>
+			      
+			    <!-- Con tanto di creatore -->
+			    <div th:unless="${#lists.isEmpty(work.makers)}">
+			    <h4>Opera di: </h4>
+	                <ul class="minList">
+		                <li th:each="artist : ${artists}" th:if="${work.makers.contains(artist)}">
+			                <a th:href="@{'/artists/' + ${artist.id}}">
+				                <span th:text="${artist.name} ">Leonardo Da Vinci </span>
+				                <span th:if="${artist.death}" th:text="${'(' + artist.birth} + '-' + ${artist.death} + ')'">(1452-1519)</span>
+			                    <span th:unless="${artist.death}" th:text="'(' + ${artist.birth} + '-In vita)'">(1519-In vita)</span>
+			                </a>
+		                </li>
+	                </ul>
+			    </div>
+			                    
+		        </li>
+	        </ul>
+	    </div>
+	    
+	    <!-- Lista degli artisti; usata solo per la galleria personale -->
+	    <div th:unless="${#lists.isEmpty(artists)}">
+			<h1 class="title">Artisti</h1>
+	        <ul class="mainList">
+		        <li th:each="artist : ${artists}">
+				    <h2>
+			            <a class="artist" th:href="@{'/artists/' + ${artist.id}}"
+				           th:text="${artist.name} + ' (' + ${artist.birth} + ')'">Leonardo Da Vinci (1452)</a>
+				    </h2>
+				    <div th:if="${artist.image}">
+				        <img th:src="@{${artist.imagePath}}">
+				    </div>
+		        </li>
+	        </ul>
+	    </div>
+	    
+	</body>
+	
+</html>

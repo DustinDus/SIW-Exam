@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Film</title>
+        <link rel="stylesheet" href="/css/list.css" />
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<h4 class="goBack"><a href="/indexMovie">Indice Film</a></h4>
+		
+        <h1>Film</h1>
+        
+        <form th:action="@{'/searchManageMovies'}" method="POST">
+			<input type="text" name="input" placeholder="Cerca per Titolo">
+			<span><button type="submit">Cerca</button></span>
+		</form>
+        
+        <div class="na" th:if="${movies.isEmpty()}">Nessun film trovato</div>
+        <ul class="elements">
+            <li th:each="movie : ${movies}">
+				
+				<h3>
+				    <a th:href="@{'/movies/' + ${movie.id}}"
+                       th:text="${movie.title} + ' (' + ${movie.year} + ')'">Up! (2000)</a>
+                </h3>
+                <img class="cover" th:src="@{${movie.coverPath}}">
+                   
+                <div class="buttons">
+				    <form class="entityButton" th:action="@{'/formUpdateMovie/' + ${movie.id}}" method="GET">
+                        <span><button type="submit">Gestisci</button></span>
+                    </form>
+                
+                    <form class="entityButton" th:action="@{'/deleteMovie/' + ${movie.id}}" method="POST">
+                        <span><button type="submit">Rimuovi</button></span>
+                    </form>
+                </div>
+                
+            </li>
+        </ul>
+        
+    </body>
+    
+</html>

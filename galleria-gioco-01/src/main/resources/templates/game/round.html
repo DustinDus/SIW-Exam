@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Gioca!</title>
+		<link rel="stylesheet" href="/css/game/gameplay.css" />
+		<script src="/js/countdown.js"></script>
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<div class="title">
+		    <h1 th:text="${question}">Cosa deve indovinare l'utente?</h1>
+		    <span id="countdown"></span>
+		    <img class="hourglass" src="/images/Hourglass2.png">
+		</div>
+		
+		<!-- Opzioni se deve indovinare nome o movimento di appartenenza dell'Opera -->
+		<div th:if="${solution}" class="options">
+		    <img class="image" th:src="${image}">
+		
+		    <ul>
+		        <li class="guess" th:each="option : ${options}">
+				    <div th:if="${option==solution}">
+				        <form th:action="@{correctChoice}" method="POST">
+		                    <div><button th:text="${option}" type="submit">Conferma</button></div>
+				        </form>
+				    </div>
+				
+				    <div th:unless="${option==solution}">
+				        <form th:action="@{wrongChoice}" method="POST">
+		                    <div><button th:text="${option}" type="submit">Conferma</button></div>
+				        </form>
+				    </div>
+		        </li>
+	        </ul>
+	    </div>
+	    
+	    <!-- Opzioni se deve indovinare l'artista (sono ammesse soluzioni multiple) -->
+	    <div th:if="${solutions}" class="options">
+		    <img class="image" th:src="${image}">
+		
+		    <ul>
+		        <li class="guess" th:each="option : ${options}">
+				    <div th:if="${#lists.contains(solutions, option)}">
+				        <form th:action="@{correctChoice}" method="POST">
+		                    <div><button th:text="${option}" type="submit">Conferma</button></div>
+				        </form>
+				    </div>
+				
+				    <div th:unless="${#lists.contains(solutions, option)}">
+				        <form th:action="@{wrongChoice}" method="POST">
+		                    <div><button th:text="${option}" type="submit">Conferma</button></div>
+				        </form>
+				    </div>
+		        </li>
+	        </ul>
+	    </div>
+	    
+	</body>
+	
+</html>

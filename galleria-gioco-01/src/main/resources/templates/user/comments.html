@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Commenti</title>
+		<link rel="stylesheet" href="/css/list.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<div class="na2" th:if="${#lists.isEmpty(comments)}">Nessun commento</div>
+		<div th:unless="${#lists.isEmpty(comments)}">
+			<h2>Commenti</h2>
+			<div th:each="comment : ${comments}">
+				
+				<div class="comment_big">
+				    <a th:href="@{'/' + ${comment.type} + 's/' + ${comment.idObject}}"><span class="comment_entity" th:text="${comment.object}">L'Assenzio</span></a>
+				    <div class="comment">
+					    <div class="comment_data">
+				            <span class="comment_time" th:text="${comment.time}">Data</span>
+			                <a th:href="@{'/userPage/' + ${comment.username}}"><span class="comment_username" th:text="${comment.username}">User</span></a>
+			                <span class="comment_image">
+			                    <span th:if="${comment.avatarPath}"><img th:src="@{${comment.avatarPath}}"></span>
+			                    <span th:unless="${comment.avatarPath}"><img src="/images/Oil-Fall.jpg"></span>
+			                </span>
+			            </div>
+			            <div class="comment_text">
+			                <span th:text="${comment.comment}">Commento sull'entita'</span>
+			            </div>
+			        </div>
+			        
+			        <!-- Per rimuovere il commento -->
+			        <div class="remove_comment" th:each="authority : ${#authentication.getAuthorities()}">
+			            <div th:if="${authority.getAuthority().equals('ADMIN')}">
+				            <form th:action="@{'/removeCommentFromList' + '/' + ${comment.id} + '/' + ${username}}" method="POST">
+				                <span><button type="submit">Rimuovi Commento</button></span>
+			                </form>
+			            </div>
+			        </div>
+			        
+			    </div>
+			</div>
+		</div>
+		
+	</body>
+	
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Notizia</title>
+		<link rel="stylesheet" href="/css/management/data.css" />
+	</head>
+    
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<div class="data">
+		
+		    <div>
+	            <h3>Titolo: </h3>
+		        <h3 class="var" th:text="${news.headline}">New entry nel cast degli Avengers</h3>
+		        <form th:action="@{'/setNewsHeadline/' + ${news.id}}" method="POST">
+		    	    <span><input required type="text" name="headline"></span>
+                    <button type="submit">Cambia</button>
+	    	    </form>
+	    	</div>
+		
+	    	<div class="newsFlex">
+	    		<h3>Testo: </h3>
+	    		<div class="newsBox">
+		            <p th:text="${news.text}">...</p>
+		        </div>
+		        <form th:action="@{'/setNewsText/' + ${news.id}}" method="POST">
+		        	<span><textarea required type="text" name="text"></textarea></span>
+                    <button type="submit">Cambia</button>
+		        </form>
+	    	</div>
+		
+		    <form th:action="@{'/formUpdateNews/' + ${news.id}}" method="GET">
+                <div>
+                    <span><button type="submit">Termina Modifica</button></span>
+                </div>
+            </form>
+		
+		</div>
+		
+	</body>
+	
+</html>

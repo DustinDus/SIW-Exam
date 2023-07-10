@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Artista</title>
+		<link rel="stylesheet" href="/css/entity.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<a class="back" th:href="@{/artists}">Torna all'indice</a>
+		
+		<h3>Dettagli Artista</h3>
+		<div th:if="${artist}">
+			
+			<!-- Info sull'Artista -->
+			<div class="info">
+				<div class="title">
+                    <span class="name" th:text="${artist.name}">Nome Artista</span>
+			        <span th:if="${artist.death}" th:text="${'(' + artist.birth} + '-' + ${artist.death} + ')'">(XXXX-YYYY)</span>
+			        <span th:unless="${artist.death}" th:text="'(' + ${artist.birth} + '-In vita)'">(XXXX-In vita)</span>
+			        <span th:if="${userDetails}">
+					    <span th:unless="${#lists.contains(favorites, artist)}">
+						    <form th:action="@{'/addArtistToFavorites/' + ${artist.id} + '/' +${userDetails.username}}" method="POST">
+							    <button type="submit"><img src="/images/fav.png" alt="add to favs"></button>
+						    </form>
+					    </span>
+					    <span th:if="${#lists.contains(favorites, artist)}">
+						    <form th:action="@{'/removeArtistFromFavorites/' + ${artist.id} + '/' +${userDetails.username}}" method="POST">
+							    <button type="submit"><img src="/images/faved.png" alt="remove from favs"></button>
+						    </form>
+					    </span>
+		            </span>
+		            <span class="message" th:text="${message}">Artista aggiunto/rimosso ai preferiti!</span>
+			    </div>
+			    <div th:class="data">
+					<div th:if="${artist.image}">
+						<img th:src="@{${artist.imagePath}}">
+					</div>
+			        <div>
+			            <br><span th:unless="${#lists.isEmpty(artist.shortBio)}" th:text="${artist.shortBio}">Biografia dell'Artista</span>
+			        </div>
+			    </div>
+			</div>
+				
+			<!-- Movimenti dell'Artista -->
+			<div class="list_name" th:unless="${#lists.isEmpty(artist.movements)}"><h3>Movimenti di appartenenza dell'artista:</h3></div>
+			<div class="na" th:if="${#lists.isEmpty(artist.movements)}">Questo artista non appartiene ad alcun movimento registrato nel sistema</div>
+			<ul>
+		        <li th:each="movement : ${artist.movements}">
+			        <a th:href="@{'/movements/' + ${movement.id}}"
+				       th:text="${movement.name}">Nome Movimento</a>
+				    <span th:if="${movement.endDate}" th:text="${'(~' + movement.startDate} + ' - ~' + ${movement.endDate} + ')'">(~XXXX - ~YYYY)</span>
+			        <span th:unless="${movement.endDate}" th:text="'(~' + ${movement.startDate} + '- Contemporaneo)'">(~XXXX - Contamporaneo)</span>
+			        
+					<ul class="mainWorks">
+			            <li th:each="work : ${movement.mainWorks}">
+						    <div th:if="${work.image}">
+			                    <img th:src="@{${work.imagePath}}">
+		                    </div>
+		                </li>
+		            </ul>
+		        </li>
+	        </ul>
+	        <!-- Gestione Movimenti -->
+	        <div th:if="${userDetails}">
+			    <div th:each="authority : ${#authentication.getAuthorities()}">
+			        <div th:if="${authority.getAuthority().equals('ADMIN')}">
+				        <form th:action="@{'/manageArtistMovements/' + ${artist.id}}" method="POST">
+				            <span><button class="button" type="submit">Gestisci i Movimenti di appartenenza dell'Artista</button></span>
+			            </form>
+			        </div>
+			    </div>
+		    </div>
+			
+			<!-- Opere dell'Artista -->
+			<div class="list_name" th:unless="${#lists.isEmpty(artist.works)}"><h3>Opere dell'artista:</h3></div>
+			<div class="na" th:if="${#lists.isEmpty(artist.works)}">Questo artista non ha creato alcuna opera registrata nel sistema</div>
+			<ul>
+		        <li th:each="work : ${artist.works}">
+			        <a th:href="@{'/works/' + ${work.id}}"
+				       th:text="${work.name} + '(' + ${work.date} + ')'">Nome Opera (XXXX)</a>
+				    <div>
+				        <br><img th:src="@{${work.imagePath}}">
+				    </div>
+		        </li>
+	        </ul>
+	        <!-- Gestione Opere -->
+	        <div th:if="${userDetails}">
+			    <div th:each="authority : ${#authentication.getAuthorities()}">
+			        <div th:if="${authority.getAuthority().equals('ADMIN')}">
+				        <form th:action="@{'/manageArtistWorks/' + ${artist.id}}" method="POST">
+				            <span><button class="button" type="submit">Gestisci le Opere dell'Artista</button></span>
+			            </form>
+			        </div>
+			    </div>
+		    </div>
+		    
+		    
+		    
+		    <!-- Form per commentare -->
+		    <div class="spaceMaker"></div>
+			<div th:if="${userDetails}">
+				<div class="newComment">
+				    <form th:action="@{'/addCommentToArtist/' + ${userDetails.username} + '/' + ${artist.id}}" method="POST">
+						<div class="newComment_info">
+							<textarea required placeholder="Lascia un commento" th:name="text"></textarea><br>
+				            <button class="button" type="submit">Invia</button>
+				        </div>
+				    </form>
+				</div>
+			</div>
+		    
+		    <!-- Commenti -->
+		    <div class="na" th:if="${#lists.isEmpty(comments)}">Nessun commento</div>
+		    <div th:unless="${#lists.isEmpty(comments)}">
+			    <h3>Commenti</h3>
+			    <div th:each="comment : ${comments}">
+					
+				    <div class="comment">
+					    <div class="comment_data">
+				            <span class="comment_time" th:text="${comment.time}">Data</span>
+			                <a th:href="@{'/userPage/' + ${comment.username}}"><span class="comment_username" th:text="${comment.username}">User</span></a>
+			                <span class="comment_image">
+			                    <span th:if="${comment.avatarPath}"><img th:src="@{${comment.avatarPath}}"></span>
+			                    <span th:unless="${comment.avatarPath}"><img src="/images/Oil-Fall.jpg"></span>
+			                </span>
+			            </div>
+			            <div class="comment_text">
+			                <span th:text="${comment.comment}">Commento sull'artista</span>
+			            </div>
+			        </div>
+			        
+			        <!-- Per rimuovere il commento -->
+			        <div class="remove_comment" th:each="authority : ${#authentication.getAuthorities()}">
+			            <div th:if="${authority.getAuthority().equals('ADMIN')}">
+				            <form th:action="@{'/removeCommentFromArtist/' + ${comment.id} + '/' + ${artist.id}}" method="POST">
+				                <span><button class="button" type="submit">Rimuovi Commento</button></span>
+			                </form>
+			            </div>
+			        </div>
+			        
+			    </div>
+		    </div>
+		    
+        </div>
+        <div th:unless="${artist}">Non trovato</div>
+        
+	</body>
+	
+</html>

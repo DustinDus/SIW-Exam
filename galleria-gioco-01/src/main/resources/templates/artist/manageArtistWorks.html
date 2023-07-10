@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Gestisci Opere dell'Artista</title>
+		<link rel="stylesheet" href="/css/list.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<a class="back" th:href="@{/artists}">Torna all'indice</a>
+		
+		<h1>Opere dell'Artista 
+		    <a th:href="@{'/artists/' + ${artist.id}}" th:text="${artist.name}">Nome Artista</a>
+		</h1>
+		
+		<!-- Opere dell'artista -->
+		<div class="na" th:if="${#lists.isEmpty(artist.works)}">Non sono state assegnate Opere all'Artista</div>
+		<ul>
+		    <li th:each="work : ${artist.works}">
+				<div class="top">
+			        <a th:href="@{'/works/' + ${work.id}}">
+				        <span th:text="${work.name}">Nome Opera</span>
+				        <span th:text="'(' + ${work.date} + ')'">(XXXX)</span>
+				    </a>
+				    <form class="sideButton" th:action="@{'/removeWorkFromArtist/' + ${work.id} + '/' + ${artist.id}}" method="POST">
+					    <span><button type="submit">Rimuovi</button></span>
+				    </form>
+				</div>
+				
+				<div class="spaceMaker"></div>
+				
+				<br><img th:src="@{${work.imagePath}}"><!-- URL --></span>
+		    </li>
+	    </ul>
+	    
+	    <!-- Altre Opere -->
+	    <h1>Altre Opere nel sistema</h1>
+	    <ul>
+		    <li th:each="work : ${works}" th:unless="${artist.works.contains(work)}">
+				<div class="top">
+			        <a th:href="@{'/works/' + ${work.id}}">
+				        <span th:text="${work.name}">Nome Opera</span>
+				        <span th:text="'(' + ${work.date} + ')'">(XXXX)</span>
+				    </a>
+				    <form class="sideButton" th:action="@{'/addWorkToArtist/' + ${work.id} + '/' + ${artist.id}}" method="POST">
+				    	<span><button type="submit">Aggiungi</button></span>
+				    </form>
+				</div>
+				
+				<div class="spaceMaker"></div>
+				
+				<br><img th:src="@{${work.imagePath}}">
+		    </li>
+	    </ul>
+	    
+	</body>
+	
+</html>

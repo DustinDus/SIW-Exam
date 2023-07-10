@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Artisti Correlati</title>
+        <link rel="stylesheet" href="/css/management/toAddToMovie.css" />
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<div class="data">
+		
+		    <h1 th:text="${news.headline}">Titolo Notizia</h1>
+        
+            <h2>Artisti correlati alla Notizia</h2>
+            <ul>
+		    	<div th:each="artist : ${artists}" th:if="${news.taggedArtists.contains(artist)}">
+                    <li>
+                        <h3 th:unless="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                        </h3>
+                        <h3 th:if="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-' + ${artist.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                        </h3>
+                        <img class="image" th:src="@{${artist.imagePath}}">
+                        <form th:action="@{'/removeArtistFromNews/' + ${artist.id} + '/' + ${news.id}}" method="POST">
+                            <div>
+                                <span><button type="submit">Rimuovi</button></span>
+                            </div>
+                        </form>
+                    </li>
+    			</div>
+            </ul>
+        
+            <h2>Attori da aggiungere</h2>
+	    	<ul>
+		    	<div th:each="artist : ${artists}" th:unless="${news.taggedArtists.contains(artist)}">
+                    <li>
+                        <h3 th:unless="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                        </h3>
+                        <h3 th:if="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-' + ${artist.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                        </h3>
+                        <img class="image" th:src="@{${artist.imagePath}}">
+                        <form th:action="@{'/addArtistToNews/' + ${artist.id} + '/' + ${news.id}}" method="POST">
+                            <div>
+                                <span><button type="submit">Aggiungi</button></span>
+                            </div>
+                        </form>
+                    </li>
+	    		</div>
+            </ul>
+
+            <form th:action="@{'/formUpdateNews/' + ${news.id}}" method="GET">
+                <div>
+                    <span><button type="submit">Termina Modifica</button></span>
+                </div>
+            </form>
+        
+            <div class="spaceMaker"></div>
+        
+		</div>
+        
+    </body>
+    
+</html>

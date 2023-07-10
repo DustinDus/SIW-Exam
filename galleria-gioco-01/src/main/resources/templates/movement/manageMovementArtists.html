@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Gestisci Artisti del Movimento</title>
+		<link rel="stylesheet" href="/css/list.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<a class="back" th:href="@{/movements}">Torna all'indice</a>
+		
+		<h1>Artisti, esponenti del Movimento 
+			<a th:href="@{'/movements/' + ${movement.id}}" th:text="${movement.name}">Nome Movimento</a>
+		</h1>
+		
+		<!-- Artisti del Movimento -->
+		<div class="na" th:if="${#lists.isEmpty(movement.artists)}">Non sono stati assegnati Artisti al Movimento</div>
+		<ul>
+		    <li th:each="artist : ${movement.artists}">
+				<div class="top">
+			        <a th:href="@{'/artists/' + ${artist.id}}">
+				        <span th:text="${artist.name}">Nome Artista</span>
+				        <span th:if="${artist.death}" th:text="${'(~' + artist.birth} + ' - ~' + ${artist.death} + ')'">(XXXX-YYYY)</span>
+			            <span th:unless="${artist.death}" th:text="'(~' + ${artist.birth} + '- In Vita)'">(XXXX-In Vita)</span>
+			        </a>
+			        <form class="sideButton" th:action="@{'/removeArtistFromMovement/' + ${artist.id} + '/' + ${movement.id}}" method="POST">
+					    <span><button type="submit">Rimuovi</button></span>
+				    </form>
+			    </div>
+			    
+			    <div class="spaceMaker"></div>
+			    
+			    <br>
+			    <div th:if="${artist.image}">
+			        <img th:src="@{${artist.imagePath}}">
+		        </div>
+		    </li>
+	    </ul>
+	    
+	    <!-- Altri Artisti -->
+	    <h1>Altri Artisti nel sistema</h1>
+	    <ul>
+		    <li th:each="artist : ${artists}" th:unless="${movement.artists.contains(artist)}">
+				<div class="top">
+			        <a th:href="@{'/artists/' + ${artist.id}}">
+				        <span th:text="${artist.name}">Nome Artista</span>
+				        <span th:if="${artist.death}" th:text="${'(~' + artist.birth} + ' - ~' + ${artist.death} + ')'">(XXXX-YYYY)</span>
+			            <span th:unless="${artist.death}" th:text="'(~' + ${artist.birth} + '- In Vita)'">(XXXX-In Vita)</span>
+			        </a>
+			        <form class="sideButton" th:action="@{'/addArtistToMovement/' + ${artist.id} + '/' + ${movement.id}}" method="POST">
+				    	<span><button type="submit">Aggiungi</button></span>
+				    </form>
+				</div>
+				
+				<div class="spaceMaker"></div>
+				
+			    <br>
+			    <div th:if="${artist.image}">
+			        <img th:src="@{${artist.imagePath}}">
+		        </div>
+		    </li>
+	    </ul>
+	    
+	</body>
+	
+</html>

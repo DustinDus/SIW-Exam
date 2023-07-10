@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Leaderboard</title>
+		<link rel="stylesheet" href="/css/game/gameBoard.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<div class="options">
+		    <a th:href="@{'/gameMenu'}">Torna al menu'</a>
+		
+		    <div class="board">
+		        <h1>Leaderboard</h1>
+		        <ol>
+		            <li th:each="score : ${scores}">
+			            <span th:text="${score.player}">Giocatore</span>
+			            <span th:text="${score.points}" th:style="'color:red'">Punteggio</span>
+		            </li>
+	            </ol>
+	        </div>
+	    </div>
+	    
+	</body>
+	
+</html>

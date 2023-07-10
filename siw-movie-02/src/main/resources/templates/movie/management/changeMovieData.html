@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Film</title>
+		<link rel="stylesheet" href="/css/management/data.css" />
+	</head>
+	
+	<body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<div class="data">
+		
+		    <div>
+		        <h3 th:text="'Titolo: '">Titolo: </h3>
+		        <h3 th:text="'Titolo: ' + ${movie.title}">Titolo del Film</h3>
+		        <form th:action="@{'/setMovieTitle/' + ${movie.id}}" method="POST">
+		        	<span><input required type="text" name="title"></span>
+                    <button type="submit">Cambia</button>
+		        </form>
+		    </div>
+		
+	    	<div>
+				<h3 th:text="'Anno di uscita: '">Anno di uscita: </h3>
+	        	<h3 th:text="${movie.year}">XXXX</h3>
+		        <form th:action="@{'/setMovieYear/' + ${movie.id}}" method="POST">
+		        	<span><input required type="number" name="year"></span>
+                    <button type="submit">Cambia</button>
+            
+                    <span th:if="${year_error}" th:text="${year_error}">Eventuali errori relativi all'anno di uscita</span>
+		        </form>
+		    </div>
+		    
+		    <form th:action="@{'/formUpdateMovie/' + ${movie.id}}" method="GET">
+                <div>
+                    <span><button type="submit">Termina Modifica</button></span>
+                </div>
+            </form>
+		
+		</div>
+		
+	</body>
+	
+</html>

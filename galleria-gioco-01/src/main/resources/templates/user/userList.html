@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Lista Utenti</title>
+		<link rel="stylesheet" href="/css/userList.css" />
+	</head>
+
+    <body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<h1>Utenti Registrati</h1>
+		<ul>
+			<li th:each="credentials : ${credentialsList}">
+				
+				<span th:if="${credentials.role.equals('DEFAULT')}">
+					<div>
+					    <h2>Utente</h2>
+				        <h2><a th:href="@{'/userPage/' + ${credentials.username}}" th:text="${credentials.username}">Username</a></h2>
+				    </div>
+				    
+				    <span th:if="${credentials.user.avatarPath}"><img th:src="@{${credentials.user.avatarPath}}"></span>
+				    
+				    <form th:action="@{'/deleteUser/' + ${credentials.username}}" method="POST">
+						<button type="submit">Cancella Account</button>
+					</form>
+				</span>
+				
+				<span th:if="${credentials.role.equals('ADMIN')}">
+					<div>
+					    <h2>Admin</h2>
+				        <h2><a th:href="@{'/userPage/' + ${credentials.username}}" th:text="${credentials.username}">Username</a></h2>
+				    </div>
+				    
+				    <span th:if="${credentials.user.avatarPath}"><img th:src="@{${credentials.user.avatarPath}}"></span>
+				</span>
+				
+			</li>
+		</ul>
+		
+	</body>
+    	
+</html>

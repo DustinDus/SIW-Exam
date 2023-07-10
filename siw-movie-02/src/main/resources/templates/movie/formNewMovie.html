@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Nuovo Film</title>
+        <link rel="stylesheet" href="/css/newEntity.css" />
+        <script src="/js/updatePreview.js"></script>
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <h4 class="goBack"><a href="/indexMovie">Indice Film</a></h4>
+		
+        <h1>Aggiungi un film</h1>
+        
+        <div>
+            <form th:action="@{/newMovie}" method="POST" th:object="${movie}" enctype="multipart/form-data" runat="server">
+			    <h3 th:if="${#fields.hasGlobalErrors()}">
+		    		<p th:each="err : ${#fields.globalErrors()}" th:text="${err}" th:style="'color:red'">...</p>
+		    	</h3>
+			
+                <h3>
+                    <span>Titolo: </span> 
+                    <span><input required type="text" th:field="${movie.title}"/></span>
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:style="'color:red'"></span>
+                </h3>
+                <h3>
+                    <span>Anno: </span>
+                    <span><input required type="number" th:field="${movie.year}"/></span>
+                    <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}" th:style="'color:red'"></span>
+                </h3>
+            
+                <label>
+                    Aggiungi immagine (.jpg o .png)
+                    <input required type="file" name="fileImage" accept="image/png, image/jpeg" onchange="updatePreview(this, 'preview')" />
+                </label>
+                <div>
+                    <img id="preview" src="/images/placeholder2.png" alt="preview" />
+                </div>
+            
+                <div>
+                    <span><button type="submit">Conferma</button></span>
+                </div>
+            </form>
+        </div>
+        
+    </body>
+    
+</html>

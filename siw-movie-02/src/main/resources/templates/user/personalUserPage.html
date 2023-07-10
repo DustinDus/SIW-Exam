@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title th:text="${userDetails.username}">Pagina Utente</title>
+		<link rel="stylesheet" href="/css/user.css" />
+		<script src="/js/updatePreview.js"></script>
+	</head>
+	
+	<body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+
+        <div class="bigBox">
+		    <h1><span th:text="${username}">User</span></h1>
+		
+		    <form th:action="@{'/userReviews/' + ${username}}" method="GET">
+                <div class="buttonBox">
+                   <span><button type="submit">Guarda Recensioni</button></span>
+                </div>
+            </form>
+            
+            <div class="data">
+                <div>Nome: <span th:text="${user.name}" th:style="'color:skyblue'">Nome Utente</span></div>
+                <div>Cognome: <span th:text="${user.surname}" th:style="'color:skyblue'">Cognome Utente</span></div>
+                <div>Email: <span th:text="${user.email}" th:style="'color:skyblue'">Email Utente</span></div>
+            </div>
+		    
+		    <div th:if="${user.avatarPath}">
+		    	<img th:src="@{${user.avatarPath}}">
+		    </div>
+		    
+		    <div class="logBox">
+		        <form th:action="@{'/setAvatar/' + ${username}}" method="POST" enctype="multipart/form-data">
+                    <label>
+                        Aggiungi immagine (.jpg o .png)
+                        <input required type="file" name="fileImage" accept="image/png, image/jpeg" onchange="updatePreview(this, 'preview')" />
+                    </label>
+                    <div>
+                        <img class="image" id="preview" src="/images/placeholder2.png" alt="preview" />
+                    </div>
+                    <div class="buttonBox">
+	                 	<span><button type="submit">Invia</button></span>
+		            </div>
+                </form>
+            </div>
+            
+        </div>
+		
+	</body>
+	
+</html>

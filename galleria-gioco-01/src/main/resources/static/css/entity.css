@@ -1,0 +1,276 @@
+header {
+	display: flex;
+	color: white;
+	background-image: linear-gradient(to right, rgb(220, 3, 3), rgb(155, 3, 3));
+	width: auto;
+	height: 3.5em;
+    text-align: start;
+    justify-content: space-between;
+}
+
+header a {
+	color: rgb(128, 128, 255);
+	text-decoration-line: none;
+}
+
+header .header_text { 
+	padding: 0.2em;
+	text-decoration: none; 
+    color: white;
+    font-size: 1.4em;
+    display: flex;
+}
+
+header .header_image {
+    -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+}
+
+body {
+	margin: 0px;
+	margin-bottom: 6em;
+	background-color: rgb(239, 239, 239);
+	font-family: Georgia, serif, Arial;
+	overflow-wrap: break-word;
+}
+
+.back {
+	margin-left: 0.3em;
+}
+
+h3 {
+	font-style: italic;
+	text-decoration: underline;
+	text-shadow: 2px 2px 5px rgb(255, 128, 128);
+	margin-top: 1.5em;
+	margin-left: 2.5em;
+}
+
+/* Racchiude tutti i dati dell'entita' */
+
+.info {
+	display: inline;
+	color: red;
+	font-size: 2.4em;
+	font-style: italic;
+	margin-left: 1.5em;
+}
+
+/* Racchiude nome, date e l'icona fav/faved */
+
+.title {
+	display: flex;
+	align-items: center;
+	margin-top: -1em;
+	margin-left: 1.5em;
+}
+
+.title button {
+	border: 0em;
+	margin-top: 0.5em;
+	margin-left: 0.5em;
+	margin-bottom: 0em;
+}
+
+.title img {
+	width: 3em;
+	height: 3em;
+}
+
+.name {
+	text-decoration: underline;
+}
+
+.message {
+	color: darkorange;
+	font-size: 0.5em;
+	font-style: normal;
+}
+
+/* Racchiude immagine e descrizione */
+
+.data {
+	display: flex;
+	color: black;
+	font-size: 0.6em;
+	font-style: normal;
+	line-height: 1.6em;
+	margin-top: 0.5em;
+	margin-left: 2.5em;
+	margin-bottom: 3em;
+}
+
+.data img, li img {
+	max-width: 30em;
+	max-height: 30em;
+	border-width: 2em solid;
+    border-style: double;
+	margin-right: 2em;
+}
+
+.data span {
+	display:block;
+	border-width: 2em solid;
+    border-style: inset;
+    border-color: grey;
+	background-color: rgb(234, 234, 234);
+    padding: 1em;
+    margin-right: 2.5em;
+}
+
+/* Per le liste */
+
+.list_name {
+	margin-top: 6em;
+	margin-bottom: 2em;
+}
+
+ul {
+	margin-left: 2em;
+}
+
+li {
+	margin-top: 0.5em;
+	margin-right: 2em;
+}
+
+button {
+	margin-left: 5em;
+	margin-bottom: 2em;
+}
+
+.na {
+	color: darkolivegreen;
+	font-weight: bold;
+	margin-left: 4em;
+}
+
+/* Per i movimenti */
+
+.mainWorks {
+	display: flex;
+	list-style: none;
+	margin-left: -2em;
+	margin-right: 2em;
+}
+
+.mainWorks li {
+    min-width: 0;
+}
+
+.mainWorksParent {
+	margin-top: -2em;
+	margin-left: 4em;
+}
+
+.worksMovement {
+	margin-left: 4em;
+	margin-bottom: 2em;
+}
+
+/* Per i commenti */
+
+.spaceMaker {
+	margin: 6em;
+}
+
+.newComment {
+	border: 0.1em;
+	border-style: solid;
+	background-color: lavender;
+	padding: 1em;
+	padding-bottom: 0em;
+	margin: 3.5em;
+}
+
+.newComment_info {
+	display: flex;
+	flex-direction: column;
+	align-items: baseline;
+	margin-left: -4em;
+}
+
+.newComment_info textarea {
+	width: 50em;
+	height: 5em;
+	margin-top: 0.5em;
+}
+
+
+.comment {
+	display: flex;
+	align-items: center;
+	border: 0.1em;
+	border-style: solid;
+	background-color: lavender;
+	padding: 1em;
+	margin: 3.5em;
+	gap: 2em;
+}
+
+.comment_data {
+	display: flex;
+	flex-direction: column;
+}
+
+.comment_time {
+	font-size: 0.8em;
+}
+
+.comment_username {
+	font-weight: bold;
+}
+
+.comment_image {
+	width: 4em;
+	height: 4em;
+	border-width: 1em;
+}
+
+.comment_image img {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+
+.comment_text {
+	border: 0.2em;
+	border-style: double;
+	background-color: lightgrey;
+	padding: 1em;
+}
+
+.comment_entity {
+	font-size: 1.2em;
+	color: blue;
+	margin-left: 2.5em;
+}
+
+.remove_comment {
+	margin: -3em 0em 1em -1.5em;
+}
+
+
+.button {
+	box-shadow: inset 0em 0.1em 0em 0em rgb(242,156,147);
+	background: linear-gradient(to bottom, rgb(222,22,0) 5%, rgb(158,0,0) 100%);
+	background-color: rgb(222,22,0);
+	border-radius: 0.2em;
+	border: 0.1em solid rgb(216,53,38);
+	display: inline-block;
+	cursor: pointer;
+	color: white;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 0.4em 1.6em;
+	text-decoration: none;
+	text-shadow: 0em 0.1em 0em rgb(178,62,53);
+}
+.button:hover {
+	background: linear-gradient(to bottom, rgb(158,0,0) 5%, rgb(222,22,0) 100%);
+	background-color: rgb(158,0,0);
+}
+.button:active {
+	position: relative;
+	top: 0.1em;
+}

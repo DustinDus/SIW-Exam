@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Notizia</title>
+        <link rel="stylesheet" href="/css/entity.css" />
+    </head>
+    
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <h4 class="goBack"><a href="/indexNews">Indice Notizie</a></h4>
+	    
+	    <h4 th:text="${news.time}">07/05/2023</h4>
+		
+        <div class="data" th:if="${news}">
+
+            <h1 class="lessSpace" th:text="${news.headline}">New entry nel cast degli Avengers</h1>
+
+            <div class="na" th:unless="${news.image}">Nessuna immagine registrata</div>
+            <div th:if="${news.image}">
+			    <img class="headlineImage" th:src="@{${news.imagePath}}">
+		    </div>
+            <div class="newsBox">
+                <p th:text="${news.text}">...</p>
+            </div>
+            
+            
+            <h2>Pagine Correlate:</h2>
+            <div th:if="${#lists.isEmpty(news.taggedArtists) and #lists.isEmpty(news.taggedMovies)}" class="na">Nessuna</div>
+            
+            <div th:unless="${#lists.isEmpty(news.taggedArtists) and #lists.isEmpty(news.taggedMovies)}">
+                <ul>
+				    <li class="box" th:each="movie : ${news.taggedMovies}">
+						<h3>
+                            <a th:href="@{'/movies/' + ${movie.id}}"
+                               th:text="${movie.title} + ' (' + ${movie.year} + ')'">Titolo Film (XXXX)</a>
+                        </h3>
+                        <img class="image" th:src="@{${movie.coverPath}}">
+				    </li>
+				    <li class="box" th:each="artist : ${news.taggedArtists}">
+						<h3 th:unless="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                        </h3>
+                        <h3 th:if="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-' + ${artist.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                        </h3>
+                        <img class="image" th:src="@{${artist.imagePath}}">
+				    </li>
+			    </ul>
+            </div>
+				
+        </div>
+        <div class="na" th:unless="${news}">Non esiste</div>
+
+    </body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cambia Direttore</title>
+        <link rel="stylesheet" href="/css/management/toAddToMovie.css" />
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<div class="data">
+			
+		    <h1 th:text="${movie.title}">Titolo film</h1>
+        
+            <div th:if="${movie.director==null}">
+                <h2 th:text="'Regista corrente: Nessuno'"></h2>
+            </div>
+            <div th:unless="${movie.director==null}">
+                <h2 th:text="'Regista corrente:'"></h2>
+                <h2 th:unless="${movie.director.death}">
+                    <a th:href="@{'/artists/' + ${movie.director.id}}"
+                       th:text="${movie.director.name} + ' ' + ${movie.director.surname} + ' (' + ${movie.director.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                </h2>
+                <h2 th:if="${movie.director.death}">
+                    <a th:href="@{'/artists/' + ${movie.director.id}}"
+                       th:text="${movie.director.name} + ' ' + ${movie.director.surname} + ' (' + ${movie.director.birth} + '-' + ${movie.director.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                </h2>
+                <img class="cover" th:src="@{${movie.director.imagePath}}">
+                <form th:action="@{'/removeDirectorFromMovie/' + ${movie.director.id} + '/' + ${movie.id}}" method="POST">
+                    <span><button class="update" type="submit">Rimuovi</button></span>
+                </form>
+            </div>
+        
+            <h1>Quale regista vuoi aggiungere?</h1>
+            <div class="na" th:if="${artists.isEmpty()}">Non ci sono artisti nel sistema</div>
+            <ul>
+                <li th:each="director : ${artists}">
+	    			<form th:action="@{'/setDirectorToMovie/' + ${director.id} + '/' + ${movie.id}}" method="POST">
+                        <h3 th:unless="${director.death}">
+                            <a th:href="@{'/artists/' + ${director.id}}"
+                               th:text="${director.name} + ' ' + ${director.surname} + ' (' + ${director.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                        </h3>
+                        <h3 th:if="${director.death}">
+                            <a th:href="@{'/artists/' + ${director.id}}"
+                               th:text="${director.name} + ' ' + ${director.surname} + ' (' + ${director.birth} + '-' + ${director.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                        </h3>
+                        <img class="image" th:src="@{${director.imagePath}}">
+                        <span><button type="submit">Aggiungi</button></span>
+                    </form>
+                </li>
+            </ul>
+            
+            <form th:action="@{'/formUpdateMovie/' + ${movie.id}}" method="GET">
+                <div>
+                    <span><button type="submit">Termina Modifica</button></span>
+                </div>
+            </form>
+        
+            <div class="spaceMaker"></div>
+        
+        </div>
+        
+    </body>
+    
+</html>

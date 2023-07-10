@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Opere</title>
+		<link rel="stylesheet" href="/css/list.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<h1>Opere</h1>
+		
+		<form th:action="@{'/searchWorks'}" method="POST">
+			<input type="text" name="input" placeholder="Cerca per nome">
+			<span><button type="submit">Cerca</button></span>
+		</form>
+		
+		<div class="na" th:if="${works==null || works.isEmpty()}">Non ci sono opere nel sistema</div>
+	    <ul>
+		    <li th:each="work : ${works}">
+				
+				<div class="top">
+				    <h3>
+			            <a th:href="@{'/works/' + ${work.id}}"
+				           th:text="${work.name} + ' (' + ${work.date} + ')'">Il viandante sul mare di nebbia (1818)</a>
+				    </h3>
+				    <div th:if="${userDetails}">
+			            <div th:each="authority : ${#authentication.getAuthorities()}">
+			                <div th:if="${authority.getAuthority().equals('ADMIN')}">
+				                <form class="sideButton" th:action="@{'/deleteWork' + '/' + ${work.id}}" method="POST">
+				                    <span><button type="submit">Cancella</button></span>
+			                    </form>
+			                </div>
+			            </div>
+		            </div>
+		        </div>
+				
+				<div>
+				    <br><img th:src="@{${work.imagePath}}"><!-- URL --></span>
+				</div>
+				
+		    </li>
+	    </ul>
+	    
+	</body>
+	
+</html>

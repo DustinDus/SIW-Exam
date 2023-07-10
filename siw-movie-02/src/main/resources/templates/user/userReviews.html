@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Recensioni Utente</title>
+		<link rel="stylesheet" href="/css/entity.css" />
+	</head>
+	
+	<body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<div class="na" th:if="${#lists.isEmpty(reviews)}"><div class="spaceMaker">Nessuna recensione</div></div>
+		<div th:unless="${#lists.isEmpty(reviews)}">
+			<h2>Recensioni dell'utente:</h2>
+			<h1><a th:href="@{'/userPage/' + ${username}}" th:text="${username}">Username</a></h1>
+			
+			<ul>
+			    <li class="review" th:each="review : ${reviews}">
+					<div class="time">
+						<span th:text="${review.time}"></span>
+					</div>
+				    <div class="userInfo">
+			            <a th:href="@{'/userPage/' + ${review.username}}"><span th:text="${review.username}">Username</span></a>
+			            <span th:if="${review.avatarPath}"><img th:src="@{${review.avatarPath}}"></span>
+			        </div>
+			        <div class="reviewInfo">
+				        <div class="title" th:text="${review.headline}">Titolo</div>
+					    <img th:if="${#strings.equals(review.rating, #strings.toString('1'))}" src="/images/ratings/1star.png">
+					    <img th:if="${#strings.equals(review.rating, #strings.toString('2'))}" src="/images/ratings/2star.png">
+					    <img th:if="${#strings.equals(review.rating, #strings.toString('3'))}" src="/images/ratings/3star.png">
+					    <img th:if="${#strings.equals(review.rating, #strings.toString('4'))}" src="/images/ratings/4star.png">
+					    <img th:if="${#strings.equals(review.rating, #strings.toString('5'))}" src="/images/ratings/5star.png">
+				    </div>
+					<br>
+					<div class="textBox">
+			            <span class="text" th:text="${review.text}">Testo</span>
+			        </div>
+			        
+			        <br>
+			        <!-- Per rimuovere la recensione -->
+			        <div th:each="authority : ${#authentication.getAuthorities()}">
+			            <div th:if="${authority.getAuthority().equals('ADMIN')}">
+				            <form class="delete" th:action="@{'/deleteReviewFromMovie/' + ${review.id} + '/' + ${review.movie.id}}" method="POST">
+				                <span><button type="submit">Rimuovi Recensione</button></span>
+			                </form>
+			             </div>
+			        </div>
+			        
+			    </li>    
+			</ul>
+			
+		</div>
+		
+	</body>
+	
+</html>

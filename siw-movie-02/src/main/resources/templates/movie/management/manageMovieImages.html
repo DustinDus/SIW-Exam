@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Film</title>
+		<link rel="stylesheet" href="/css/management/data.css" />
+		<script src="/js/updatePreview.js"></script>
+	</head>
+	
+	<body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <div class="data">
+		
+		<h2>Immagine di copertina</h2>
+		<img th:src="@{${movie.coverPath}}">
+		
+		<h2 class="needSpace">Immagini registrate</h2>
+        <div>
+		    <ul>
+				<li th:each="imagePath : ${movie.imagePaths}">
+					<img th:src="@{${imagePath}}">
+					
+					<div th:if="${hasSeveralImages}">
+						<form th:action="@{'/setMovieCover/' + ${movie.id}}" method="POST">
+						    <button type="submit" th:value="${imagePath}" name="coverPath">Metti in copertina</button>
+					    </form>
+					    <form th:action="@{'/deleteImageFromMovie/' + ${movie.id}}" method="POST">
+						    <button type="submit" th:value="${imagePath}" name="imagePath">Rimuovi</button>
+					    </form>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<form class="newImage" th:action="@{'/addImageToMovie/' + ${movie.id}}" method="POST" enctype="multipart/form-data">
+			<label>
+                    Aggiungi immagine (.jpg o .png)
+                    <input required type="file" name="fileImage" accept="image/png, image/jpeg" onchange="updatePreview(this, 'preview')" />
+            </label>
+            <div>
+                <img class="image" id="preview" src="/images/placeholder2.png" alt="preview" />
+            </div>
+            <div>
+	        	<button type="submit">Invia</button>
+		    </div>
+		</form>
+		
+		<form class="end" th:action="@{'/formUpdateMovie/' + ${movie.id}}" method="GET">
+            <div>
+                <span><button type="submit">Termina Modifica</button></span>
+            </div>
+        </form>
+		
+		</div>
+		
+	</body>
+	
+</html>

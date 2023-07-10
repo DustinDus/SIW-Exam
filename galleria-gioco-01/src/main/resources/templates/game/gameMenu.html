@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Menu'</title>
+		<link rel="stylesheet" href="/css/game/gameStart.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<img class="title_image" src="/images/Titolo-Gioco3.png" alt="Azzecca l'Opera" width="600" height="300">
+		
+		<div class="options">
+			<div class="buttons">
+				<span th:if="${currentScore}">
+					<form th:action="@{'/intermission'}" method="GET">
+			            <span><button class="continue" type="submit">Continua Partita</button></span>
+	                </form>
+				</span>
+				
+		        <form th:action="@{'/start'}" method="POST">
+			        <span><button class="play" type="submit">Nuova Partita</button></span>
+	            </form>
+	            
+	            <form th:action="@{'/leaderboard'}" method="GET">
+			        <span><button class="leaderboard" type="submit">Leaderboard</button></span>
+	            </form>
+	        </div>
+	    
+	        <div class="rules">
+		        <h4>Regole</h4>
+		        <p>Per ogni round ti sara' mostrata un'immagine:</p>
+		        <p>-Scegli l'opzione corretta tra le disponibili entro il tempo dato</p>
+		        <p>-Per ogni risposta corretta guadagni un punto ed avanzi al prossimo round</p>
+		        <p>-Se sbagli il gioco termina e sara' mostrato il tuo punteggio.</p>
+		        <p>Mira al punteggio piu' alto!</p>
+		    </div>
+		</div>
+		
+	</body>
+	
+</html>

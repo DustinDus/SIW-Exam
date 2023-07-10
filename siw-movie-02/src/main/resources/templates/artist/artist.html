@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Artista</title>
+        <link rel="stylesheet" href="/css/entity.css" />
+    </head>
+    
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <h4 class="goBack"><a href="/indexArtist">Indice Artisti</a></h4>
+		
+        <div class="data" th:if="${artist}">
+	
+            <h1 class="lessSpace" th:text="${artist.name} + ' ' + ${artist.surname}">Nome Cognome</h1>
+            <h2 th:if="${artist.death}" th:text="${'(' + artist.birth} + '-' + ${artist.death} + ')'">(XXXX-YYYY)</h2>
+			<h2 th:unless="${artist.death}" th:text="'(' + ${artist.birth} + '-In vita)'">(XXXX-In vita)</h2>
+			<img class="cover" th:src="@{${artist.imagePath}}">
+			
+			<div class="cont" th:unless="${#lists.isEmpty(artist.directed)}">
+			    <h2>Ha diretto:</h2>
+				<ul>
+					<li class="box" th:each="movie : ${artist.directed}">
+						<a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.title} + ' (' + ${movie.year} + ')'">Titolo Film (XXXX)</a>
+						<span><img class="image" th:src="@{${movie.coverPath}}"></span>
+					</li>
+				</ul>
+			</div>
+			
+			
+			<div th:unless="${#lists.isEmpty(artist.acted)}">
+			<h2>Ha recitato in:</h2>
+				<ul>
+					<li class="box" th:each="movie : ${artist.acted}">
+						<a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.title} + ' (' + ${movie.year} + ')'">Titolo Film (XXXX)</a>
+						<div><img class="image" th:src="@{${movie.coverPath}}"></div>
+					</li>
+				</ul>
+			</div>
+				
+        </div>
+        <div class="na" th:unless="${artist}">Non esiste</div>
+
+    </body>
+
+</html>

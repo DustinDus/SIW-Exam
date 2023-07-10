@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Artisti</title>
+        <link rel="stylesheet" href="/css/list.css" />
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<h4 class="goBack"><a href="/indexArtist">Indice Artisti</a></h4>
+		
+        <h1>Artisti</h1>
+        
+        <form th:action="@{'/searchArtists'}" method="POST">
+			<input type="text" name="input" placeholder="Cerca per nome">
+			<span><button type="submit">Cerca</button></span>
+		</form>
+        
+        <div class="na" th:if="${#lists.isEmpty(artists)}">Nessun artista trovato</div>
+        <ul>
+            <li th:each="artist : ${artists}">
+				<h3 th:unless="${artist.death}">
+                    <a th:href="@{'/artists' + '/' + ${artist.id}}"
+                       th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-In vita)'">Nicholas Cage (1964-In vita)</a>
+                </h3>
+                <h3 th:if="${artist.death}">
+                    <a th:href="@{'/artists' + '/' + ${artist.id}}"
+                       th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-' + ${artist.death} + ')'">Richard Harris (1930-2002)</a>
+                </h3>
+			    <img th:src="@{${artist.imagePath}}">
+            </li>
+        </ul>
+        
+    </body>
+    
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Index</title>
+		<link rel="stylesheet" href="/css/indexAdmin.css" />
+	</head>
+	
+	<body>
+		<!-- Posso aggiungere commenti
+		     Solo gli utenti registrati possono commentare
+		     Un commento ha nome utente e descrizione
+		     Ogni opera/artista/movimento ha una lista di commenti -->
+
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<img class="title_image" src="/images/Titolo-Galleria3.png" alt="fall" width="480" height="60">
+		
+		<h1><a th:href="@{'/gallery'}">Entra nella Galleria</a></h1>
+		<h1><a th:href="@{'/gameMenu'}">Gioca ad Azzecca l'Opera</a></h1>
+		
+		<div class="manager">
+		    <h2><a th:href="@{'/works'}">Indice Opere</a></h2>
+			<h3><a th:href="@{'/formNewWork'}">Aggiungi Opera</a></h3>
+		</div>
+		
+		<div class="manager">
+		    <h2><a th:href="@{'/artists'}">Indice Artisti</a></h2>
+			<h3><a th:href="@{'/formNewArtist'}">Aggiungi Artista</a></h3>
+		</div>
+		
+		<div class="manager">
+		    <h2><a th:href="@{'/movements'}">Indice Correnti</a></h2>
+			<h3><a th:href="@{'/formNewMovement'}">Aggiungi Movimento</a></h3>
+		</div>
+		
+		<div class="manager">
+		    <h2><a th:href="@{'/userList'}" th:style="'color:indianred'">Lista Utenti</a></h2>
+		</div>
+		
+	</body>
+	
+</html>

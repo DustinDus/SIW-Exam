@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Notizie</title>
+        <link rel="stylesheet" href="/css/list.css" />
+    </head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <h4 class="goBack"><a href="/indexNews">Indice Notizie</a></h4>
+		
+        <h1>Notizie</h1>
+        
+        <div th:unless="${moviesOnly!=null or artistsOnly!=null}">
+            <form th:action="@{'/searchNews'}" method="POST">
+		    	<input type="text" name="input" placeholder="Cerca per nome">
+		    	<span><button type="submit">Cerca</button></span>
+		    </form>
+		</div>
+		<div th:if="${moviesOnly}">
+            <form th:action="@{'/searchMovieNews'}" method="POST">
+		    	<input type="text" name="input" placeholder="Cerca per nome">
+		    	<span><button type="submit">Cerca</button></span>
+		    </form>
+		</div>
+		<div th:if="${artistsOnly}">
+            <form th:action="@{'/searchArtistNews'}" method="POST">
+		    	<input type="text" name="input" placeholder="Cerca per nome">
+		    	<span><button type="submit">Cerca</button></span>
+		    </form>
+		</div>
+        
+        <div class="na" th:if="${#lists.isEmpty(newsList)}">Nessuna notizia trovata</div>
+        <ul>
+            <li th:each="news : ${newsList}">
+                <h3>
+                    <a th:href="@{'/news/' + ${news.id}}"
+                       th:text="${news.headline} + ' (' + ${news.time} + ')'">Titolo Notizia (XX/YY/ZZZZ)</a>
+                </h3>
+                <div th:if="${news.image}">
+			        <img th:src="@{${news.imagePath}}">
+		        </div>
+            </li>
+        </ul>
+        
+    </body>
+    
+</html>

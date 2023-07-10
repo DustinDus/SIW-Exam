@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Registrazione completata</title>
+		<link rel="stylesheet" href="/css/auth.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<h1>Registrazione completata con successo!</h1>
+		
+		<div class="register">
+		    <h2>Benvenuto nella galleria</h2>
+		    
+		    <h3>
+			    <strong>Nome: </strong>
+			    <span th:text="${user.name}"></span>
+		    </h3>
+		    <h3>
+			    <strong>Cognome: </strong>
+			    <span th:text="${user.surname}"></span>
+		    </h3>
+		    <h3>
+			    <strong>Email: </strong>
+			    <span th:text="${user.email}"></span>
+		    </h3>
+		
+		    <br><a th:href="@{'/'}">Torna alla Homepage</a>
+		</div>
+		
+	</body>
+	
+</html>

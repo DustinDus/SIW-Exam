@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    	<title>Login</title>
+    	<link rel="stylesheet" href="/css/auth.css" />
+    </head>
+
+    <body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+    	<h1>Login</h1>
+    	
+    	<form th:action="@{/login}" method="POST">
+    			<h3>
+    				<span>Username:</span>
+    				<span><input name="username" placeholder="username" type="text" required /></span>
+    			</h3>
+    			<h3>
+    				<span>Password:</span>
+    				<span><input name="password" placeholder="password" type="password" required /></span>
+    			</h3>
+    			<h3>
+    				<span th:if="${param.error != null}">Username o password errati</span>
+    			</h3>
+    			
+    			<div>
+    				<span><button type="submit">Login</button></span>
+    			</div>
+    	</form>
+    	
+    	<div class="register">
+			<br>
+			<span>Non hai un account?</span>
+    		<a th:href="@{/register}">Registrati ora!</a>
+    	</div>
+    	
+    </body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Film</title>
+        <link rel="stylesheet" href="/css/entity.css" />
+    </head>
+    
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+	    
+	    <h4 class="goBack"><a href="/indexMovie">Indice Film</a></h4>
+		
+        <div class="data" th:if="${movie}">
+
+            <h1 th:text="${movie.title}">Titolo film</h1>
+            <h2 th:text="'(' + ${movie.year} + ')'">XXXX</h2>
+			<h2>Immagine di copertina:</h2>
+			<img class="cover" th:src="@{${movie.coverPath}}">
+			
+			
+			<div class="na" th:if="${#lists.isEmpty(movie.images)}">Nessuna immagine registrata</div>
+            <div th:unless="${#lists.isEmpty(movie.images)}">
+				<h2>Immagini:</h2>
+				<ul>
+					<li th:each="imagePath : ${movie.imagePaths}">
+						<img class="image" th:src="@{${imagePath}}">
+					</li>
+				</ul>
+		    </div>
+
+
+            <div class="na" th:unless="${movie.director}">Direttore non registrato</div>
+            <span class="box" th:if="${movie.director}"
+                <h4>Diretto da: </h4>
+				<h3 th:unless="${movie.director.death}">
+                    <a th:href="@{'/artists/' + ${movie.director.id}}"
+                       th:text="${movie.director.name} + ' ' + ${movie.director.surname} + ' (' + ${movie.director.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                </h3>
+                <h3 th:if="${movie.director.death}">
+                    <a th:href="@{'/artists/' + ${movie.director.id}}"
+                       th:text="${movie.director.name} + ' ' + ${movie.director.surname} + ' (' + ${movie.director.birth} + '-' + ${movie.director.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                </h3>
+			    <img class="photo" th:src="@{${movie.director.imagePath}}">
+			</span>
+
+
+            <div class="na" th:if="${#lists.isEmpty(movie.actors)}">Nessun attore registrato</div>
+            <div th:unless="${#lists.isEmpty(movie.actors)}">
+			    <h2>Attori:</h2>
+				<ul>
+					<li class="box" th:each="artist : ${movie.actors}">
+						<h3 th:unless="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-In vita)'">Nome Cognome (XXXX-In vita)</a>
+                        </h3>
+                        <h3 th:if="${artist.death}">
+                            <a th:href="@{'/artists/' + ${artist.id}}"
+                               th:text="${artist.name} + ' ' + ${artist.surname} + ' (' + ${artist.birth} + '-' + ${artist.death} + ')'">Nome Cognome (XXXX-YYYY)</a>
+                        </h3>
+			            <img class="photo" th:src="@{${artist.imagePath}}">
+					</li>
+				</ul>
+			</div>
+			
+			
+			
+			
+			<div class="spaceMaker"></div>
+			<div th:if="${userDetails}">
+				<div th:unless="${hasReviewed}">
+					<h2>Lascia una recensione</h2>
+				    <form class="toReview" th:action="@{'/addReview/' + ${userDetails.username} + '/' + ${movie.id}}" method="POST">
+						<div>
+							<span>Titolo: </span>
+						    <input required type="text" th:name="headline">
+						    
+							<span>Voto: </span>
+							<select required th:name="rating">
+								    <option value="1">1</option>
+								    <option value="2">2</option>
+								    <option value="3">3</option>
+								    <option value="4">4</option>
+								    <option value="5">5</option>
+							</select>
+						</div>
+						
+						<br>
+						<div>
+							<textarea required placeholder="Che ne pensi?" th:name="text"></textarea>
+						</div>	
+						<br>
+						<button type="submit">Invia</button>
+				    </form>
+				</div>
+			</div>
+			
+			
+			<div class="na" th:if="${#lists.isEmpty(reviews)}">Nessuna recensione</div>
+		    <div th:unless="${#lists.isEmpty(reviews)}">
+			    <h2>Recensioni degli utenti</h2>
+			    <ul class="reviews">
+			        <li class="review" th:each="review : ${reviews}">
+						<div class="time">
+							<span th:text="${review.time}"></span>
+						</div>
+					    <div class="userInfo">
+			                <a th:href="@{'/userPage/' + ${review.username}}"><span th:text="${review.username}">Username</span></a>
+			                <span th:if="${review.avatarPath}"><img th:src="@{${review.avatarPath}}"></span>
+			            </div>
+			            <div class="reviewInfo">
+							<div class="title" th:text="${review.headline}">Titolo</div>
+						    <img th:if="${#strings.equals(review.rating, #strings.toString('1'))}" src="/images/ratings/1star.png">
+						    <img th:if="${#strings.equals(review.rating, #strings.toString('2'))}" src="/images/ratings/2star.png">
+						    <img th:if="${#strings.equals(review.rating, #strings.toString('3'))}" src="/images/ratings/3star.png">
+						    <img th:if="${#strings.equals(review.rating, #strings.toString('4'))}" src="/images/ratings/4star.png">
+						    <img th:if="${#strings.equals(review.rating, #strings.toString('5'))}" src="/images/ratings/5star.png">
+					    </div>
+					    <br>
+					    <div class="textBox">
+			                <span class="text" th:text="${review.text}">Testo</span>
+			            </div>
+			        
+			            <br>
+			            <!-- Per rimuovere la recensione -->
+			            <div th:each="authority : ${#authentication.getAuthorities()}">
+			                <div th:if="${authority.getAuthority().equals('ADMIN')}">
+				                <form class="delete" th:action="@{'/deleteReviewFromMovie/' + ${review.id} + '/' + ${movie.id}}" method="POST">
+				                    <span><button type="submit">Rimuovi Recensione</button></span>
+			                    </form>
+			                 </div>
+			            </div>
+			        </li>
+			    </ul>
+			</div>
+             
+        </div>
+        <div class="na" th:unless="${movie}">Non esiste</div>
+
+    </body>
+</html>

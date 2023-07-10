@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Lista Utenti</title>
+		<link rel="stylesheet" href="/css/userList.css" />
+	</head>
+
+    <body>
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<h1>Utenti Registrati</h1>
+		<ul>
+			<li th:each="credentials : ${credentialsList}">
+				
+				<span th:if="${credentials.role.equals('DEFAULT')}">
+					<h2>Utente</h2>
+				    <h2><a th:href="@{'/userPage/' + ${credentials.username}}" th:text="${credentials.username}">Username</a></h2>
+				    <span th:if="${credentials.user.avatarPath}"><img th:src="@{${credentials.user.avatarPath}}"></span>
+				    
+				    <form th:action="@{'/deleteUser/' + ${credentials.username}}" method="POST">
+						<button type="submit">Cancella Account</button>
+					</form>
+				</span>
+				
+				<span th:if="${credentials.role.equals('ADMIN')}">
+					<h2>Admin</h2>
+				    <h2><a th:href="@{'/userPage/' + ${credentials.username}}" th:text="${credentials.username}">Username</a></h2>
+				    <span th:if="${credentials.user.avatarPath}"><img th:src="@{${credentials.user.avatarPath}}"></span>
+				</span>
+				
+			</li>
+		</ul>
+		
+	</body>
+    	
+</html>

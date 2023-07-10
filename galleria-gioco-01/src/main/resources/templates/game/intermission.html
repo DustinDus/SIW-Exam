@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Pronti?</title>
+		<link rel="stylesheet" href="/css/game/gameStart.css" />
+		<script type="text/javascript">
+            window.history.forward();
+        </script>
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<div class="spaceMaker"></div>
+		
+		<div class="buttons">
+			<div th:if="${currentScore}>0">
+		        <h3><span class="currentPoints" th:text="'Punteggio attuale: ' + ${currentScore}">Punteggio attuale: X</span></h3>
+		    </div>
+		
+		    <form th:action="@{'/game'}" method="POST">
+				<div th:if="${currentScore}>0">
+			        <span><button class="play" type="submit">Continua</button></span>
+			    </div>
+			    <div th:unless="${currentScore}>0">
+			        <span><button class="play" type="submit">Comincia</button></span>
+			    </div>
+		    </form>
+		
+		    <form th:action="@{'/gameMenu'}" method="GET">
+			    <span><button class="continue" type="submit">Torna al Menù</button></span>
+	        </form>
+	    </div>
+	</body>
+	
+</html>

@@ -1,0 +1,109 @@
+header {
+	display: flex;
+	color: white;
+	background-image: linear-gradient(to right, rgb(220, 3, 3), rgb(155, 3, 3));
+	width: auto;
+	height: 3.5em;
+    text-align: start;
+    justify-content: space-between;
+}
+
+header a {
+	color: rgb(128, 128, 255);
+	text-decoration-line: none;
+}
+
+header .header_text { 
+	padding: 0.2em;
+	text-decoration: none; 
+    color: white;
+    font-size: 1.4em;
+    display: flex;
+}
+
+header .header_image {
+    -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+}
+
+body {
+	margin: 0px;
+	margin-bottom: 6em;
+	background-color: rgb(239, 239, 239);
+	font-family: Georgia, serif, Arial;
+	overflow-wrap: break-word;
+}
+
+.na {
+	color: darkolivegreen;
+	font-weight: bold;
+	margin: 4em;
+}
+
+.title {
+	font-size: 300%;
+	font-style: italic;
+	color: red;
+	text-decoration: underline;
+	text-shadow: 2px 2px 5px rgb(255, 128, 128);
+	margin-top: 1em;
+	padding-left: 1.5em;
+	margin-bottom: 1em;
+}
+
+
+li img {
+	max-width: 30em;
+	max-height: 30em;
+	border-width: 2em solid;
+    border-style: double;
+    margin-top: 1em;
+}
+
+
+.movement {
+	font-size: 150%;
+	font-style: italic;
+	text-shadow: 2px 2px 5px rgb(181, 166, 255);
+}
+
+.work {
+	font-size: 200%;
+	font-style: italic;
+	text-shadow: 2px 2px 5px rgb(216, 208, 255);
+	margin-bottom: 1em;
+}
+
+.artist {
+	font-size: 150%;
+	font-style: italic;
+	text-shadow: 2px 2px 5px rgb(216, 208, 255);
+}
+
+.mainList {
+	list-style: none;
+	background-color: rgb(234, 234, 234);
+	padding-left: 4em;
+}
+
+.mainList > li {
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-bottom: 1em;
+	margin-bottom: 3em;
+}
+
+.sndList {
+	list-style: none;
+}
+
+.sndList > li {
+    background-color: rgb(229, 229, 229);
+	padding-top: 2em;
+	padding-left: 1em;
+	padding-bottom: 2em;
+}
+
+.minList {
+	margin-top: -1em;
+}

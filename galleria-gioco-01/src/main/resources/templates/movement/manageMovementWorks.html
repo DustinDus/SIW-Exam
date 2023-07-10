@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Gestisci Opere del Movimento</title>
+		<link rel="stylesheet" href="/css/list.css" />
+	</head>
+	
+	<body>
+		<header>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></div>
+			</div>
+			<div class="header_text" th:if="${userDetails}">
+				<div><a href="/logout">Logout</a></div>
+			</div>
+			<div class="header_text" th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+			<div class="header_image">
+				<a href="/"><img src="/images/Oil-Fall.jpg" alt="fall"></a>
+			</div>
+		</header>
+		
+		<a class="back" th:href="@{/movements}">Torna all'indice</a>
+		
+		<h1>Opere Principali del Movimento 
+			<a th:href="@{'/movements/' + ${movement.id}}" th:text="${movement.name}">Nome Movimento</a>
+		</h1>
+		
+		<!-- Solo le Opere principali del Movimento (max 3) -->
+		<div class="na" th:if="${#lists.isEmpty(movement.mainWorks)}">Non sono state assegnate Opere Principali al Movimento</div>
+		<ul>
+		    <li th:each="work : ${movement.mainWorks}">
+				<div class="top">
+			        <a th:href="@{'/works/' + ${work.id}}">
+				        <span th:text="${work.name}">Nome Opera</span>
+				        <span th:text="'(' + ${work.date} + ')'">(XXXX)</span>
+				    </a>
+				    <form class="sideButton" th:action="@{'/removeWorkFromMovement/' + ${work.id} + '/' + ${movement.id}}" method="POST">
+					    <span><button type="submit">Rimuovi</button></span>
+				    </form>
+				    <form class="sideButton" th:action="@{'/removeMainWorkFromMovement/' + ${work.id} + '/' + ${movement.id}}" method="POST">
+					    <span><button type="submit">Rimuovi dalle Opere Principali</button></span>
+				    </form>
+				</div>
+				
+				<div class="spaceMaker"></div>
+				
+				<br><img th:src="@{${work.imagePath}}"><!-- URL --></span>
+		    </li>
+	    </ul>
+		
+		<!-- Tutte le Opere del Movimento (principali incluse) -->
+		<h1>Opere del Movimento</h1>
+		<div class="na" th:if="${#lists.isEmpty(movement.works)}">Non sono state assegnate Opere al Movimento</div>
+		<ul>
+		    <li th:each="work : ${movement.works}">
+				<div class="top">
+			        <a th:href="@{'/works/' + ${work.id}}">
+				        <span th:text="${work.name}">Nome Opera</span>
+				        <span th:text="'(' + ${work.date} + ')'">(XXXX)</span>
+				    </a>
+				    <form class="sideButton" th:action="@{'/removeWorkFromMovement/' + ${work.id} + '/' + ${movement.id}}" method="POST">
+			    		<span><button type="submit">Rimuovi</button></span>
+			    	</form>
+			    	<form class="sideButton" th:unless="${movement.mainWorks.contains(work)}" th:action="@{'/addMainWorkToMovement/' + ${work.id} + '/' + ${movement.id}}" method="POST">
+			    		<span><button type="submit">Aggiungi alle Opere Principali</button></span> <span th:if="err" th:text="${error}"></span>
+			    	</form>
+				</div>
+				
+				<div class="spaceMaker"></div>
+				
+				<br><img th:src="@{${work.imagePath}}"><!-- URL --></span>
+		    </li>
+	    </ul>
+	    
+	    <!-- Altre Opere -->
+	    <h1>Altre Opere nel sistema</h1>
+	    <ul>
+		    <li th:each="work : ${works}" th:unless="${movement.works.contains(work)}">
+				<div class="top">
+			        <a th:href="@{'/works/' + ${work.id}}">
+				        <span th:text="${work.name}">Nome Opera</span>
+				        <span th:text="'(' + ${work.date} + ')'">(XXXX)</span>
+				    </a>
+				    <form class="sideButton" th:action="@{'/addWorkToMovement/' + ${work.id} + '/' + ${movement.id}}" method="POST">
+					    <span><button type="submit">Aggiungi</button></span>
+				    </form>
+				</div>
+				
+				<div class="spaceMaker"></div>
+				
+				<br><img th:src="@{${work.imagePath}}"><!-- URL --></span>
+		    </li>
+	    </ul>
+	    
+	</body>
+	
+</html>

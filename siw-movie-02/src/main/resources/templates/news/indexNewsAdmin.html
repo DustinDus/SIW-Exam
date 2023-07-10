@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Operazioni Notizie</title>
+        <link rel="stylesheet" href="/css/index.css" />
+    </head>
+    
+    <body class="newspaper">
+		<header>
+		    <div th:if="${userDetails}">
+			    <span><a th:href="@{'/userPage/' + ${userDetails.username}}" th:text="${userDetails.username}"></a></span>
+			    <a href="/logout">Logout</a>
+		    </div>
+		    <div th:unless="${userDetails}">
+			    <a href="/login">Login</a>
+		    </div>
+		    <div class="homepage">
+				<a href="/"><img src="/images/ciak.png"></a>
+			</div>
+	    </header>
+		
+		<div class="spaceMaker"></div>
+		
+		<div class="options">
+		    <h2>Operazioni su notizie possibili:</h2>
+
+            <a href="/news"><h1>Cerca Notizie</h1></a>
+            <a href="/movieNews"><h1>Cerca Notizie su Film</h1></a>
+            <a href="/artistNews"><h1>Cerca Notizie su Artisti</h1></a>
+            
+            <a href="/formNewNews" th:style="'color:slategrey'"><h1>Inserisci nuova notizia</h1></a>
+            <a href="/manageNews" th:style="'color:slategrey'"><h1>Gestisci notizie correnti</h1></a>
+		</div>
+		
+	</body>
+	
+</html>
