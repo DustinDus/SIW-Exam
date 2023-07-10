@@ -80,8 +80,8 @@ ul li {
 	margin: 1em;
 }
 ul img {
-	max-width: 25em;
-	max-height: 25em;
+	width: 25em;
+	height: 25em;
 	outline: 0.2em;
 	outline-color: rgb(192, 192, 192);
 	outline-style: groove;

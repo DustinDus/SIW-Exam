@@ -43,7 +43,7 @@ public class WorkController {
 	
 	@GetMapping("/works")
 	public String getWorks(Model model) {
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 		return "works.html";
 	}
 	
@@ -99,20 +99,20 @@ public class WorkController {
 	//'''''''''''''''''''''''''''''''''''''''''''''''''''
 	
 	// Artisti dell'opera
-	@PostMapping("/manageWorkArtists/{id}")
+	@PostMapping("/changeWorkArtist/{id}")
 	public String manageWorkArtists(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("work", this.workService.getWork(id));
-		model.addAttribute("artists", this.artistService.getAll());
-		return "manageWorkArtists.html";
+		model.addAttribute("artists", this.artistService.getAllByBirth());
+		return "changeWorkArtist.html";
 	}
 	
 	// Aggiungi un artista all'opera
-	@PostMapping("/addArtistToWork/{idArtist}/{idWork}")
+	@PostMapping("/setArtistToWork/{idArtist}/{idWork}")
 	public String addArtistToWork(@PathVariable("idArtist") Long idArtist, @PathVariable("idWork") Long idWork, Model model) {
 		Work work = this.workService.getWork(idWork);
 		Artist artist = this.artistService.getArtist(idArtist);
 		
-		if(!work.getMakers().contains(artist)) {
+		if(work.getArtist()!=artist) {
 			// Aggiorno l'opera
 		    this.workService.addArtist(work, artist);
 		    
@@ -121,8 +121,8 @@ public class WorkController {
 		}
 		
 		model.addAttribute("work", work);
-		model.addAttribute("artists", this.artistService.getAll());
-		return "manageWorkArtists.html";
+		model.addAttribute("artists", this.artistService.getAllByBirth());
+		return "changeWorkArtist.html";
 	}
 	
 	// Rimuovi un artista dall'opera
@@ -131,7 +131,7 @@ public class WorkController {
 		Work work = this.workService.getWork(idWork);
 		Artist artist = this.artistService.getArtist(idArtist);
 		
-		if(work.getMakers().contains(artist)) {
+		if(work.getArtist()!=artist) {
 			// Aggiorno l'opera
 		    this.workService.removeArtist(work, artist);
 		    
@@ -140,16 +140,16 @@ public class WorkController {
 		}
 		
 		model.addAttribute("work", work);
-		model.addAttribute("artists", this.artistService.getAll());
-		return "manageWorkArtists.html";
+		model.addAttribute("artists", this.artistService.getAllByBirth());
+		return "changeWorkArtist.html";
 	}
 	
 	// Movimento dell'opera
 	@PostMapping("/changeWorkMovement/{id}")
 	public String changeWorkMovement(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("work", this.workService.getWork(id));
-		model.addAttribute("movements", this.movementService.getAll());
-		return "changeWorkMovement";
+		model.addAttribute("movements", this.movementService.getAllByStart());
+		return "changeWorkMovement.html";
 	}
 	
 	// Cambia il movimento dell'opera
@@ -167,8 +167,8 @@ public class WorkController {
 		}
 		
 		model.addAttribute("work", work);
-		model.addAttribute("movements", this.movementService.getAll());
-		return "changeWorkMovement";
+		model.addAttribute("movements", this.movementService.getAllByStart());
+		return "changeWorkMovement.html";
 	}
 	
 	// Rimuovi il movimento da un'opera
@@ -186,8 +186,8 @@ public class WorkController {
 		}
 		
 		model.addAttribute("work", work);
-		model.addAttribute("movements", this.movementService.getAll());
-		return "changeWorkMovement";
+		model.addAttribute("movements", this.movementService.getAllByStart());
+		return "changeWorkMovement.html";
 	}
 	
 	//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -256,7 +256,7 @@ public class WorkController {
 		// Cancello la directory e l'opera
     	this.workService.deleteWork(work);
 		
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 		return "works.html";
 	}
 	

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import it.uniroma3.prs.model.Favorites;
 import it.uniroma3.prs.model.Work;
+import it.uniroma3.prs.service.ArtistService;
 import it.uniroma3.prs.service.CredentialsService;
 import it.uniroma3.prs.service.MovementService;
 import it.uniroma3.prs.service.WorkService;
@@ -17,6 +18,7 @@ import it.uniroma3.prs.service.WorkService;
 @Controller
 public class GalleryController {
 
+	@Autowired private ArtistService artistService;
 	@Autowired private MovementService movementService;
 	@Autowired private WorkService workService;
 	
@@ -26,7 +28,7 @@ public class GalleryController {
 	public String gallery(Model model) {
 		model.addAttribute("movements", this.movementService.getAllByStart());
 		
-		model.addAttribute("artists", null);
+		model.addAttribute("artists", this.artistService.getAllByBirth());
 		
 		model.addAttribute("areThereOutsiders", this.workService.existsByUnknownArtist());
 		model.addAttribute("works", this.workService.getAllByDate());

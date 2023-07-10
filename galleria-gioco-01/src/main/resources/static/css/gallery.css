@@ -41,13 +41,17 @@ body {
 }
 
 .title {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	text-align: center;
 	font-size: 300%;
 	font-style: italic;
 	color: red;
 	text-decoration: underline;
 	text-shadow: 2px 2px 5px rgb(255, 128, 128);
 	margin-top: 1em;
-	padding-left: 1.5em;
 	margin-bottom: 1em;
 }
 
@@ -80,16 +84,25 @@ li img {
 	text-shadow: 2px 2px 5px rgb(216, 208, 255);
 }
 
+ul {
+	padding: 0em;
+}
+
 .mainList {
 	list-style: none;
 	background-color: rgb(234, 234, 234);
-	padding-left: 4em;
+}
+
+.mainList li {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	text-align: center;
 }
 
 .mainList > li {
-	padding-top: 1em;
-	padding-left: 1em;
-	padding-bottom: 1em;
+	padding: 1em;
 	margin-bottom: 3em;
 }
 
@@ -97,13 +110,28 @@ li img {
 	list-style: none;
 }
 
+.sndList li {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	text-align: center;
+}
+
 .sndList > li {
+	border-radius: 1em;
     background-color: rgb(229, 229, 229);
-	padding-top: 2em;
-	padding-left: 1em;
-	padding-bottom: 2em;
+	padding: 2em;
 }
 
 .minList {
 	margin-top: -1em;
+}
+
+.mainList li {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	text-align: center;
 }

@@ -64,6 +64,7 @@ a:hover {
 	margin-bottom: 0em;
 }
 .bigBox img {
+	max-width: 30em;
 	max-height: 30em;
 	outline: 0.2em;
 	outline-color: rgb(192, 192, 192);

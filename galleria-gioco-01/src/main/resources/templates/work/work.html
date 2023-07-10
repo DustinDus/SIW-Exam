@@ -59,11 +59,13 @@
 		    <div class="list_name" th:if="${work.movement}">
 			    <h3>Movimento di appartenenza: </h3>
 			    <div class="worksMovement">
-			        <span th:text"${work.movement}">
+			        <span th:if="${work.movement}">
 				        <h2>
-							<span th:text="${work.movement.name}">Nome Movimento</span>
-				            <span th:if="${work.movement.endDate}" th:text="${'(~' + work.movement.startDate} + ' - ~' + ${work.movement.endDate} + ')'">(~XXXX - ~YYYY)</span>
-			                <span th:unless="${work.movement.endDate}" th:text="'(~' + ${work.movement.startDate} + '- Contemporaneo)'">(~XXXX - Contamporaneo)</span>
+							<a th:href="@{'/movements/' + ${work.movement.id}}">
+			                    <span th:text="${work.movement.name}">Nome Movimento</span>
+			                    <span th:if="${work.movement.endDate}" th:text="${'(~' + work.movement.startDate} + ' - ~' + ${work.movement.endDate} + ')'">(~XXXX - ~YYYY)</span>
+			                    <span th:unless="${work.movement.endDate}" th:text="'(~' + ${work.movement.startDate} + '- Contemporaneo)'">(~XXXX - Contamporaneo)</span>
+			                </a>
 			            </h2>
 			        </span>
 			    </div>
@@ -79,6 +81,7 @@
 		        </div>
 		    </div>
 		    <div class="na" th:unless="${work.movement}">Quest'Opera non e' stata assegnata ad un Movimento</div><br>
+		    <div class="lessTop" th:if="${work.movement}"></div>
 		    <!-- Gestione Movimento -->
 		    <div th:if="${userDetails}">
 			    <div th:each="authority : ${#authentication.getAuthorities()}">
@@ -90,30 +93,34 @@
 			    </div>
 		    </div>
 		
-		    <!-- Artefici dell'Opera -->
-		    <div class="list_name" th:unless="${#lists.isEmpty(work.makers)}"><h3>Opera di:</h3></div>
-		    <div class="na" th:if="${#lists.isEmpty(work.makers)}">Non e' stato assegnato un creatore a quest'Opera</div>
-		    <ul>
-		        <li th:each="artist : ${work.makers}">
-		            <a th:href="@{'/artists/' + ${artist.id}}"
-			           th:text="${artist.name}">Nome Artista</a>
-			        <span th:if="${artist.death}" th:text="${'(' + artist.birth} + '-' + ${artist.death} + ')'">(XXXX-YYYY)</span>
-			        <span th:unless="${artist.death}" th:text="'(' + ${artist.birth} + '-In Vita)'">(XXXX-In Vita)</span>
-			        <div th:if="${artist.image}">
-			            <br><img th:src="@{${artist.imagePath}}">
-			        </div>
-		        </li>
-	        </ul>
-	        <!-- Gestione Artisti -->
+		    <!-- Creatore dell'Opera -->
+		    <div class="list_name" th:if="${work.artist}">
+			    <h3>Creatore dell'Opera: </h3>
+			    <div class="worksMovement">
+					<span th:if="work.artist">
+				        <h2 th:unless="${work.artist.death}">
+                            <a th:href="@{'/movements/' + ${work.artist.id}}">
+			                    <span th:text="${work.artist.name}">Nome Artista</span>
+			                    <span th:if="${work.artist.death}" th:text="${'(' + work.artist.birth} + ' -' + ${work.artist.death} + ')'">(XXXX-YYYY)</span>
+			                    <span th:unless="${work.artist.death}" th:text="'(' + ${work.artist.birth} + '-In vita)'">(XXXX-In vita)</span>
+			                </a>
+                        </h2>
+                    </span>
+			    </div>
+		    </div>
+		    <div class="na" th:unless="${work.artist}">Quest'Opera non e' stata assegnata ad un Artista</div><br>
+		    <div class="lessTop" th:if="${work.artist}"></div>
+	        <!-- Gestione Artista -->
 	        <div th:if="${userDetails}">
 			    <div th:each="authority : ${#authentication.getAuthorities()}">
 			        <div th:if="${authority.getAuthority().equals('ADMIN')}">
-				        <form th:action="@{'/manageWorkArtists/' + ${work.id}}" method="POST">
+				        <form th:action="@{'/changeWorkArtist/' + ${work.id}}" method="POST">
 			                <span><button class="button" type="submit">Gestisci gli Artefici dell'Opera</button></span>
 		                </form>
 			        </div>
 			    </div>
 		    </div>
+		
 		
 		
 		
@@ -141,7 +148,7 @@
 			                <a th:href="@{'/userPage/' + ${comment.username}}"><span class="comment_username" th:text="${comment.username}">User</span></a>
 			                <span class="comment_image">
 			                    <span th:if="${comment.avatarPath}"><img th:src="@{${comment.avatarPath}}"></span>
-			                    <span th:unless="${comment.avatarPath}"><img src="/images/Oil-Fall.jpg"></span>
+			                    <span th:unless="${comment.avatarPath}"><img src="/images/Oil-Fall-Def.jpg"></span>
 			                </span>
 			            </div>
 			            <div class="comment_text">

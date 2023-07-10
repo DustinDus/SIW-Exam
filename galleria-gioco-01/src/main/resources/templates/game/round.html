@@ -50,27 +50,6 @@
 	        </ul>
 	    </div>
 	    
-	    <!-- Opzioni se deve indovinare l'artista (sono ammesse soluzioni multiple) -->
-	    <div th:if="${solutions}" class="options">
-		    <img class="image" th:src="${image}">
-		
-		    <ul>
-		        <li class="guess" th:each="option : ${options}">
-				    <div th:if="${#lists.contains(solutions, option)}">
-				        <form th:action="@{correctChoice}" method="POST">
-		                    <div><button th:text="${option}" type="submit">Conferma</button></div>
-				        </form>
-				    </div>
-				
-				    <div th:unless="${#lists.contains(solutions, option)}">
-				        <form th:action="@{wrongChoice}" method="POST">
-		                    <div><button th:text="${option}" type="submit">Conferma</button></div>
-				        </form>
-				    </div>
-		        </li>
-	        </ul>
-	    </div>
-	    
 	</body>
 	
 </html>

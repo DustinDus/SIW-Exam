@@ -142,6 +142,7 @@ button {
 .na {
 	color: darkolivegreen;
 	font-weight: bold;
+	margin-top: 2em;
 	margin-left: 4em;
 }
 
@@ -166,6 +167,12 @@ button {
 .worksMovement {
 	margin-left: 4em;
 	margin-bottom: 2em;
+}
+
+/* Per le opere */
+
+.lessTop {
+	margin-top: -2em;
 }
 
 /* Per i commenti */

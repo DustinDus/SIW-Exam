@@ -23,7 +23,7 @@ public class Credentials {
 	@NotBlank
 	@Size(max=30)
 	private String username;
-	//@Size(min=6)
+	@Size(min=6)
 	private String password;
 	private String role;
 

@@ -33,6 +33,7 @@
 				    </div>
 				    
 				    <span th:if="${credentials.user.avatarPath}"><img th:src="@{${credentials.user.avatarPath}}"></span>
+				    <span th:unless="${credentials.user.avatarPath}"><img src="/images/Oil-Fall-Def.jpg"></span>
 				    
 				    <form th:action="@{'/deleteUser/' + ${credentials.username}}" method="POST">
 						<button type="submit">Cancella Account</button>
@@ -46,6 +47,7 @@
 				    </div>
 				    
 				    <span th:if="${credentials.user.avatarPath}"><img th:src="@{${credentials.user.avatarPath}}"></span>
+				    <span th:unless="${credentials.user.avatarPath}"><img src="/images/Oil-Fall-Def.jpg"></span>
 				</span>
 				
 			</li>

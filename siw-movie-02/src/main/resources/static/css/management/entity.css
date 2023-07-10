@@ -86,6 +86,7 @@ div > h3 {
 
 .cover {
 	max-width: 50em;
+	max-height: 50em;
 	outline: 0.2em;
 	outline-color: rgb(192, 192, 192);
 	outline-style: groove;
@@ -97,6 +98,7 @@ div > h3 {
 
 .image {
 	max-width: 25em;
+	max-height: 25em;
 	outline: 0.2em;
 	outline-color: rgb(192, 192, 192);
 	outline-style: groove;

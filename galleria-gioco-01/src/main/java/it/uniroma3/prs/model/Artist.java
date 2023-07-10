@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -35,7 +36,7 @@ public class Artist {
 	@Column(columnDefinition = "TEXT")
 	private String shortBio;
 	
-	@ManyToMany(mappedBy="makers")
+	@OneToMany(mappedBy="artist")
 	private List<Work> works;
 	@ManyToMany(mappedBy="artists")
 	private List<Movement> movements;

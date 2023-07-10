@@ -41,7 +41,7 @@ public class MovementController {
 	
 	@GetMapping("/movements")
 	public String getMovements(Model model) {
-		model.addAttribute("movements", this.movementService.getAll());
+		model.addAttribute("movements", this.movementService.getAllByStart());
 		return "movements.html";
 	}
 	
@@ -99,7 +99,7 @@ public class MovementController {
 	@PostMapping("/manageMovementWorks/{id}")
 	public String manageMovementWorks(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("movement", this.movementService.getMovement(id));
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 		return "manageMovementWorks.html";
 	}
 		
@@ -118,7 +118,7 @@ public class MovementController {
 		}
 		
 		model.addAttribute("movement", movement);
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 		return "manageMovementWorks.html";
 	}
 		
@@ -137,7 +137,7 @@ public class MovementController {
 		}
 		
 		model.addAttribute("movement", movement);
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 	    return "manageMovementWorks.html";
 	}
 	
@@ -157,7 +157,7 @@ public class MovementController {
 		}
 		
 		model.addAttribute("movement", movement);
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 		return "manageMovementWorks.html";
 	}
 	
@@ -172,7 +172,7 @@ public class MovementController {
 		}
 		
 		model.addAttribute("movement", movement);
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 		return "manageMovementWorks.html";
 	}
 		
@@ -180,7 +180,7 @@ public class MovementController {
 	@PostMapping("/manageMovementArtists/{id}")
 	public String manageMovementArtists(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("movement", this.movementService.getMovement(id));
-		model.addAttribute("artists", this.artistService.getAll());
+		model.addAttribute("artists", this.artistService.getAllByBirth());
 		return "manageMovementArtists.html";
 	}
 		
@@ -199,7 +199,7 @@ public class MovementController {
 		}
 		
 		model.addAttribute("movement", movement);
-		model.addAttribute("artists", this.artistService.getAll());
+		model.addAttribute("artists", this.artistService.getAllByBirth());
 		return "manageMovementArtists.html";
 	}
 		
@@ -218,7 +218,7 @@ public class MovementController {
 		}
 		
 		model.addAttribute("movement", movement);
-		model.addAttribute("artists", this.artistService.getAll());
+		model.addAttribute("artists", this.artistService.getAllByBirth());
 		return "manageMovementArtists.html";
 	}
 	
@@ -286,7 +286,7 @@ public class MovementController {
 		// Rimuovo il movimento dal repository
 		this.movementService.deleteMovement(movement);
 		
-		model.addAttribute("movements", this.movementService.getAll());
+		model.addAttribute("movements", this.movementService.getAllByStart());
 		return "movements.html";
 	}
 	

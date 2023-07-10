@@ -79,12 +79,12 @@ public class WorkService {
 
 	@Transactional
 	public void addArtist(Work work, Artist artist) {
-		work.getMakers().add(artist);
+		work.setArtist(artist);
 	    this.workRepository.save(work);
 	}
 	@Transactional
 	public void removeArtist(Work work, Artist artist) {
-		work.getMakers().remove(artist);
+		work.setArtist(null);
 	    this.workRepository.save(work);
 	}
 
@@ -116,12 +116,13 @@ public class WorkService {
 	// Others
 	//'''''''''''''''''''''''''''''''''''''''''''''''''''
 	
-	// Rimuove l'artista dal campo makers delle opere
+	// Rimuove l'artista dal campo artist delle opere
 	@Transactional
 	public void deleteArtist(Artist artist) {
 		Iterable<Work> works = this.workRepository.findAll();
 		for(Work work : works) {
-			work.getMakers().remove(artist);
+			if(work.getArtist()==artist)
+				work.setArtist(null);
 		}
 	}
 	

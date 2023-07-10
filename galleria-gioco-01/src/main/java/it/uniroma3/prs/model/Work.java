@@ -3,14 +3,11 @@ package it.uniroma3.prs.model;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,14 +22,14 @@ public class Work {
 	private String name;
 	@NotNull
 	@Max(2023)
-	private Integer date; // Puoi inserire un campo booleano "preciso", se false il display mostra ~anno anziche' anno
+	private Integer date;
 	
 	private String image;
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	
-	@ManyToMany
-	private List<Artist> makers;
+	@ManyToOne
+	private Artist artist;
 	@ManyToOne
 	private Movement movement;
 	
@@ -73,11 +70,11 @@ public class Work {
 		this.description = description;
 	}
 	
-	public List<Artist> getMakers() {
-		return this.makers;
+	public Artist getArtist() {
+		return this.artist;
 	}
-	public void setMakers(List<Artist> makers) {
-		this.makers = makers;
+	public void setArtist(Artist artist) {
+		this.artist = artist;
 	}
 	
 	public Movement getMovement() {

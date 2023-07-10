@@ -40,12 +40,12 @@ public class GameService {
 		Random r = new Random();
 		
 		// Opera senza artista e movimento
-		if( work.getMovement()==null && (work.getMakers()==null || work.getMakers().size()==0) ) {
+		if( work.getMovement()==null && work.getArtist()==null ) {
 			this.guessTheName(work,model);
 		}
 		
 		// Opera senza artista o movimento
-		else if( work.getMovement()==null || (work.getMakers()==null || work.getMakers().size()==0) ) {
+		else if( work.getMovement()==null || work.getArtist()==null ) {
 			int n = r.nextInt(2);
 			
 			if(work.getMovement()==null) {
@@ -122,32 +122,23 @@ public class GameService {
 
 	@Transactional
 	public void guessTheArtist(Work work, Model model) {
-		// Soluzione originale
+		// Soluzione
 		List<String> options = new ArrayList<String>();
-		List<String> solutions = new ArrayList<String>();
-		Artist option = this.getRandomArtist(work);
-		solutions.add(this.artistOption(option));
-		model.addAttribute("solutions", solutions);
-		
+		String option = this.artistOption(work.getArtist());
+		model.addAttribute("solution", option);
+			
 		// Opzioni tra cui scegliere
-		options.add(this.artistOption(option));
-	    for(int i=0 ; i<3 ; i++) {
-	    	
-	    	// Evita duplicati
-			while(options.contains(this.artistOption(option))) {
-				option = this.artistService.getRandomArtist();
-			}
-			
-			// E' possibile avere piu' soluzioni corrette se altri artisti tra le opzioni sono comunque artifici dell'opera scelta
-			if(work.getMakers().contains(option)) {
-				solutions.add(this.artistOption(option));
-				model.addAttribute("solutions", solutions);
-			}
-			
+	    options.add(option);
+		for(int i=0 ; i<3 ; i++) {
+					
+			// Evita duplicati
+			while(options.contains(option))
+				option = this.artistOption(this.artistService.getRandomArtist());
+					
 			// Opzione aggiunta
-			options.add(this.artistOption(option));
-			
-	    }
+			options.add(option);
+					
+		   }
 		Collections.shuffle(options);
 		model.addAttribute("options", options);
 		
@@ -184,16 +175,6 @@ public class GameService {
 	//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 	// Funzioni ausiliarie per tenere in ordine il codice
 	//'''''''''''''''''''''''''''''''''''''''''''''''''''
-	
-	// Funzione ausiliaria a guessTheArtist per selezionare un artista casuale
-	@Transactional
-	private Artist getRandomArtist(Work work) {
-		Random r = new Random();
-		int n = r.nextInt(work.getMakers().size());
-		Artist artist = work.getMakers().get(n);
-		
-		return artist;
-	}
 	
 	// Restituisce una stringa opzione per guessTheName
 	@Transactional

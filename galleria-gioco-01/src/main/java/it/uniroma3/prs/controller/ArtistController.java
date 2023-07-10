@@ -43,7 +43,7 @@ public class ArtistController {
 	
 	@GetMapping("/artists")
 	public String getArtists(Model model) {
-		model.addAttribute("artists", this.artistService.getAll());
+		model.addAttribute("artists", this.artistService.getAllByBirth());
 		return "artists.html";
 	}
 	
@@ -106,7 +106,7 @@ public class ArtistController {
 	@PostMapping("/manageArtistMovements/{id}")
 	public String manageArtistMovements(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("artist", this.artistService.getArtist(id));
-		model.addAttribute("movements", this.movementService.getAll());
+		model.addAttribute("movements", this.movementService.getAllByStart());
 		return "manageArtistMovements.html";
 	}
 	
@@ -125,7 +125,7 @@ public class ArtistController {
 		}
 		
 		model.addAttribute("artist", artist);
-		model.addAttribute("movements", this.movementService.getAll());
+		model.addAttribute("movements", this.movementService.getAllByStart());
 		return "manageArtistMovements.html";
 	}
 	
@@ -144,7 +144,7 @@ public class ArtistController {
 		}
 		
 		model.addAttribute("artist", artist);
-		model.addAttribute("movements", this.movementService.getAll());
+		model.addAttribute("movements", this.movementService.getAllByStart());
 		return "manageArtistMovements.html";
 	}
 	
@@ -152,7 +152,7 @@ public class ArtistController {
 	@PostMapping("/manageArtistWorks/{id}")
 	public String manageArtistWorks(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("artist", this.artistService.getArtist(id));
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 		return "manageArtistWorks.html";
 	}
 	
@@ -171,7 +171,7 @@ public class ArtistController {
 		}
 		
 		model.addAttribute("artist", artist);
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 		return "manageArtistWorks.html";
 	}
 	
@@ -190,7 +190,7 @@ public class ArtistController {
 		}
 		
 		model.addAttribute("artist", artist);
-		model.addAttribute("works", this.workService.getAll());
+		model.addAttribute("works", this.workService.getAllByDate());
 		return "manageArtistWorks.html";
 	}
 	
@@ -259,7 +259,7 @@ public class ArtistController {
 		// Cancello directory ed artista
     	this.artistService.deleteArtist(artist);
 		
-		model.addAttribute("artists", this.artistService.getAll());
+		model.addAttribute("artists", this.artistService.getAllByBirth());
 		return "artists.html";
 	}
 	
