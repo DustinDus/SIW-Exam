@@ -131,9 +131,9 @@ public class WorkController {
 		Work work = this.workService.getWork(idWork);
 		Artist artist = this.artistService.getArtist(idArtist);
 		
-		if(work.getArtist()!=artist) {
+		if(work.getArtist()==artist) {
 			// Aggiorno l'opera
-		    this.workService.removeArtist(work, artist);
+		    this.workService.removeArtist(work);
 		    
 		    // Aggiorno l'artista
 		    this.artistService.removeWork(artist, work);

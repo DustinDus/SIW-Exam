@@ -43,7 +43,14 @@ h1 {
 }
 
 form {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
 	margin-left: 4em;
+}
+
+input {
+	font-size: 1.2em;
 }
 
 li {
@@ -56,6 +63,14 @@ li img {
 	max-height: 30em;
 	border-width: 2em solid;
     border-style: double;
+}
+
+.singleImage {
+	max-width: 30em;
+	max-height: 30em;
+	border-width: 2em solid;
+    border-style: double;
+    margin-top: 2em;
 }
 
 .na {
@@ -189,6 +204,12 @@ button:active {
 	position: relative;
 	top: 0.1em;
 }
+/* Ingrandisco il pulsante "Cerca" */
+body > form > span > button {
+	font-size: 1.2em;
+	padding: 0.2em 0.8em;
+}
+
 
 
 .needSpace {

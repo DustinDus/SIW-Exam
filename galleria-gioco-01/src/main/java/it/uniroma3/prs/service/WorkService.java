@@ -83,7 +83,7 @@ public class WorkService {
 	    this.workRepository.save(work);
 	}
 	@Transactional
-	public void removeArtist(Work work, Artist artist) {
+	public void removeArtist(Work work) {
 		work.setArtist(null);
 	    this.workRepository.save(work);
 	}

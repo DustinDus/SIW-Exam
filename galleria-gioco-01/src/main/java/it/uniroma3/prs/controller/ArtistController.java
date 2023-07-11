@@ -186,7 +186,7 @@ public class ArtistController {
 	        this.artistService.removeWork(artist, work);
 		    
 		    // Aggiorno l'opera
-	        this.workService.removeArtist(work, artist);
+	        this.workService.removeArtist(work);
 		}
 		
 		model.addAttribute("artist", artist);

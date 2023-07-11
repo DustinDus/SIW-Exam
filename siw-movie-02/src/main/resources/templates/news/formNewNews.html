@@ -32,7 +32,7 @@
 			
                 <h3>
                     <span>Titolo: </span> 
-                    <span><input required type="text" th:field="${news.headline}"/></span>
+                    <span><input class="headliner" required type="text" th:field="${news.headline}"/></span>
                     <span th:if="${#fields.hasErrors('headline')}" th:errors="*{title}" th:style="'color:red'"></span>
                 </h3>
                 <h3 class="textBox">

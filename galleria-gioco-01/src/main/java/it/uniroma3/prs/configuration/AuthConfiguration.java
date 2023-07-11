@@ -91,13 +91,16 @@ public class AuthConfiguration {
                 .requestMatchers(HttpMethod.POST,"/newArtist"
                 		                        ,"/newMovement"
                 		                        ,"/newWork").hasAnyAuthority(ADMIN_ROLE)
-                // ...O modificare quelli esistenti
+                // ...O modificare quelli esistenti...
                 .requestMatchers(HttpMethod.POST,"/manageArtistMovements/**","/addMovementToArtist/**","/removeMovementFromArtist/**"
                 		                        ,"/manageArtistWorks/**","/addWorkToArtist/**","/removeWorkFromArtist/**"
                 		                        ,"/manageMovementWorks/**","/addWorkToMovement/**","/removeWorkFromMovement/**"
                 		                        ,"/manageMovementArtists/**","/addArtistToMovement/**","/removeArtistFromMovement/**"
                 		                        ,"/manageWorkArtists/**","/addArtistToWork/**","/removeArtistFromWork/**"
                 		                        ,"/changeWorkMovement/**","/setMovementToWork/**","/removeMovementFromWork/**").hasAnyAuthority(ADMIN_ROLE)
+                // ...O accedere alla lista utenti e cancellare utenti registrati (amministratori esclusi)
+                .requestMatchers(HttpMethod.GET,"/userList").hasAnyAuthority(ADMIN_ROLE)
+                .requestMatchers(HttpMethod.POST,"/deleteArtist/**").hasAnyAuthority(ADMIN_ROLE)
                 
                 
         		// tutti gli utenti autenticati possono accere alle pagine rimanenti 

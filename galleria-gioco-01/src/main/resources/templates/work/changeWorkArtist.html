@@ -34,12 +34,15 @@
 				<div class="top">
 			        <a th:href="@{'/artists/' + ${work.artist.id}}">
 			            <span class="name" th:text="${work.artist.name}">Nome Artista</span>
-			        <span th:if="${work.artist.death}" th:text="${'(' + work.artist.birth} + '-' + ${work.artist.death} + ')'">(XXXX-YYYY)</span>
-			        <span th:unless="${work.artist.death}" th:text="'(' + ${work.artist.birth} + '-In vita)'">(XXXX-In vita)</span>
+			            <span th:if="${work.artist.death}" th:text="${'(' + work.artist.birth} + '-' + ${work.artist.death} + ')'">(XXXX-YYYY)</span>
+			            <span th:unless="${work.artist.death}" th:text="'(' + ${work.artist.birth} + '-In vita)'">(XXXX-In vita)</span>
 			        </a>
 			        <form class="sideButton" th:action="@{'/removeArtistFromWork/' + ${work.artist.id} + '/' + ${work.id}}" method="POST">
 				        <span><button type="submit">Rimuovi</button></span>
 			        </form>
+			    </div>
+			    <div th:if="${work.artist.image}">
+				    <img class="singleImage" th:src="@{${work.artist.imagePath}}">
 			    </div>
 		    </div>
 		</h2>
