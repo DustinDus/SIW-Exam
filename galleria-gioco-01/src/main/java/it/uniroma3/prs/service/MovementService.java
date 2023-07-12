@@ -54,7 +54,7 @@ public class MovementService {
 	@Transactional
 	public void saveMovement(Movement movement) {
 		this.movementRepository.save(movement);
-	}
+	}	
 
 	@Transactional
 	public void addArtist(Movement movement, Artist artist) {

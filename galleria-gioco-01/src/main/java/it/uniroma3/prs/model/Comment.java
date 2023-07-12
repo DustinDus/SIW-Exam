@@ -15,7 +15,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	
-	private String username; // Del commentatore
+	private String username; // del commentatore
 
 	private String comment;
 	

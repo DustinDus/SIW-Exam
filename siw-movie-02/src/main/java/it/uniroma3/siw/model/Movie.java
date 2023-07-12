@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames={"title","year"}) })
 public class Movie {
 	
 	@Id

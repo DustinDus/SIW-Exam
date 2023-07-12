@@ -101,7 +101,7 @@ public class ArtistController {
 	//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 	// Gestisci Artista
 	//'''''''''''''''''''''''''''''''''''''''''''''''''''
-		
+	
 	// Movimenti dell'artista
 	@PostMapping("/manageArtistMovements/{id}")
 	public String manageArtistMovements(@PathVariable("id") Long id, Model model) {

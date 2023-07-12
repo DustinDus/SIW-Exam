@@ -1,13 +1,13 @@
 package it.uniroma3.prs.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
-//import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -20,6 +20,7 @@ public class Credentials {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	
+	@Column(unique=true)
 	@NotBlank
 	@Size(max=30)
 	private String username;

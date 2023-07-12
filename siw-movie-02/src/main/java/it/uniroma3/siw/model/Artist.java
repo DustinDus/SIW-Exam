@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames={"name","surname","birth"}) })
 public class Artist {
 	
 	@Id

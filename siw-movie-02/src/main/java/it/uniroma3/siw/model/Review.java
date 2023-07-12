@@ -22,7 +22,7 @@ public class Review {
     private Long id;
 
 	@NotBlank
-	private String username; // Del commentatore
+	private String username; // del commentatore
 	
 	@NotBlank
 	@Size(max=100)
